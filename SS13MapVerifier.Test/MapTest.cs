@@ -47,7 +47,6 @@ namespace SS13MapVerifier.Test
         [TestMethod]
         public void ShallBeAbleToGetuPNeighbourFromOneOne()
         {
-
             var tileOrigo = MakeTile(1, 1, 1);
             var tileExpected = MakeTile(1, 1, 2);
             var map = new Map.Map(new[] { tileOrigo, tileExpected, MakeTile(1, 2, 1), MakeTile(2, 1, 1), MakeTile(2, 2, 1) });

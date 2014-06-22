@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 using Common.Extensions;
 
@@ -43,7 +42,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
             var directions = section.Directions.GetFlags().OfType<Direction>().Except(new[] { Direction.None, Direction.Any }).ToArray();
             section.HasBeenVisited = true;
             section.FullyConnected = directions.All(x => GetSectionsFromTile(tileToSections, section.Tile.GetNeighbour(x), x).Any(y => Asd(section.ContentType, y.ContentType)));
-
+            
             foreach (var pipeDirection in directions)
             {
                 var neighbourTile = section.Tile.GetNeighbour(pipeDirection);
@@ -51,7 +50,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
                 {
                     VisitNeighbours(tileToSections, neighbour, contentType, pipeDirection);
                 }
-
             }
         }
 
@@ -84,7 +82,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         private Direction AcquireRelevantDirections(string content, int direction)
         {
-
             var enumDirection = (Direction)direction;
             if (true)
             {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Common;
-
 namespace SS13MapVerifier.Map
 {
     public class Map : IMap
@@ -47,7 +45,7 @@ namespace SS13MapVerifier.Map
             if (neighbour == null && (direction == Direction.Up || direction == Direction.Down))
             {
                 Tile result;
-                if (map.TryGetValue(GetNewCoordinates(direction, tile.Coordinate), out result))
+                if (this.map.TryGetValue(GetNewCoordinates(direction, tile.Coordinate), out result))
                 {
                     neighbour = result;
                 }
@@ -59,7 +57,7 @@ namespace SS13MapVerifier.Map
         public ITile GetTileAtCoordinate(Coordinate coordinate)
         {
             Tile result;
-            map.TryGetValue(coordinate, out result);
+            this.map.TryGetValue(coordinate, out result);
             return result;
         }
 
@@ -91,6 +89,14 @@ namespace SS13MapVerifier.Map
             return new Coordinate(newX, newY, newZ);
         }
 
+        private Tile AcquireNeighbour(ITile tile, Direction direction)
+        {
+            Tile neighbourTile;
+            var newCoords = GetNewCoordinates(direction, tile.Coordinate);
+            this.map.TryGetValue(newCoords, out neighbourTile);
+            return neighbourTile;
+        }
+
         private void SetupNeighbours(Tile tile)
         {
             foreach (Direction direction in Enum.GetValues(typeof(Direction)))
@@ -112,31 +118,6 @@ namespace SS13MapVerifier.Map
                 neighbour.AddNeighbour(Directions.GetOppositeDirection(direction), tile);
             }
         }
-
-        private Tile AcquireNeighbour(ITile tile, Direction direction)
-        {
-            Tile neighbourTile;
-            var newCoords = GetNewCoordinates(direction, tile.Coordinate);
-            this.map.TryGetValue(newCoords, out neighbourTile);
-            return neighbourTile;
-        }
-
-        #endregion
-    }
-
-    public interface IMap
-    {
-        #region Public Properties
-
-        IEnumerable<ITile> Tiles { get; }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        ITile GetNeighbour(ITile tile, Direction direction);
-
-        ITile GetTileAtCoordinate(Coordinate coordinate);
 
         #endregion
     }

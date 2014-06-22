@@ -10,21 +10,7 @@ namespace SS13MapVerifier.Console
 {
     internal class ShallBeOneAndOnlyOneApcInEachArea
     {
-        [DebuggerDisplay("{Count}")]
-        private class ApcCounter
-        {
-            private readonly IList<ITile> tiles = new List<ITile>();
-
-            public int Count { get; set; }
-
-            public IList<ITile> Tiles
-            {
-                get
-                {
-                    return tiles;
-                }
-            }
-        }
+        #region Public Methods and Operators
 
         public IEnumerable<Log> ValidateMap(IMap map)
         {
@@ -34,8 +20,7 @@ namespace SS13MapVerifier.Console
             {
                 // We do not care for space or areas in space. 
                 // Assumption: Only one turf per tile
-                if (tile.Contents.Any(x => "/turf/space".Equals(x))
-                    || tile.Contents.Any(x => "/area".Equals(x))
+                if (tile.Contents.Any(x => "/turf/space".Equals(x)) || tile.Contents.Any(x => "/area".Equals(x))
                     || tile.Contents.Any(x => x.StartsWith("/area/holodeck/"))
                     || tile.Contents.Any(x => x.StartsWith("/area/shuttle/"))
                     || tile.Contents.Any(x => x.StartsWith("/area/solar/"))
@@ -53,7 +38,9 @@ namespace SS13MapVerifier.Console
                     yield return log;
                 }
 
-                var numberOfApcs = tile.Contents.Count(x => x.Equals("/obj/machinery/power/apc") || x.StartsWith("/obj/machinery/power/apc{"));
+                var numberOfApcs =
+                    tile.Contents.Count(
+                        x => x.Equals("/obj/machinery/power/apc") || x.StartsWith("/obj/machinery/power/apc{"));
                 var counter = apcCount.SafeGetValue(areaName, () => new ApcCounter());
                 counter.Count += numberOfApcs;
                 counter.Tiles.Add(tile);
@@ -61,7 +48,9 @@ namespace SS13MapVerifier.Console
 
             foreach (var badArea in apcCount.Where(x => x.Value.Count != 1))
             {
-                var log = new Log(string.Format("Bad APC count: {0} - {1}", badArea.Key, badArea.Value.Count), Severity.Error);
+                var log = new Log(
+                    string.Format("Bad APC count: {0} - {1}", badArea.Key, badArea.Value.Count), 
+                    Severity.Error);
                 foreach (var tile in badArea.Value.Tiles)
                 {
                     log.AddTile(tile);
@@ -69,6 +58,32 @@ namespace SS13MapVerifier.Console
 
                 yield return log;
             }
+        }
+
+        #endregion
+
+        [DebuggerDisplay("{Count}")]
+        private class ApcCounter
+        {
+            #region Fields
+
+            private readonly IList<ITile> tiles = new List<ITile>();
+
+            #endregion
+
+            #region Public Properties
+
+            public int Count { get; set; }
+
+            public IList<ITile> Tiles
+            {
+                get
+                {
+                    return this.tiles;
+                }
+            }
+
+            #endregion
         }
     }
 }

@@ -6,9 +6,8 @@ namespace Common.Extensions
     public static class EnumerableExtensions
     {
         public static int CompareTo<T>(IEnumerable<T> source, IEnumerable<T> sequence)
-            where T :IComparable<T>
+            where T : IComparable<T>
         {
-
             if (ReferenceEquals(source, sequence))
             {
                 return 0;

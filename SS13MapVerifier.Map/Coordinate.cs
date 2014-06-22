@@ -6,9 +6,15 @@ namespace SS13MapVerifier.Map
     [DebuggerDisplay("{X} - {Y} - {Z}")]
     public class Coordinate : IEquatable<Coordinate>
     {
+        #region Fields
+
         private readonly int x;
         private readonly int y;
         private readonly int z;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         public Coordinate(int x, int y, int z)
         {
@@ -17,28 +23,37 @@ namespace SS13MapVerifier.Map
             this.z = z;
         }
 
+        #endregion
+
+        #region Public Properties
+
         public int X
         {
-            get { return x; }
+            get
+            {
+                return this.x;
+            }
         }
 
         public int Y
         {
-            get { return y; }
+            get
+            {
+                return this.y;
+            }
         }
 
         public int Z
         {
-            get { return z; }
+            get
+            {
+                return this.z;
+            }
         }
 
-        public override int GetHashCode()
-        {
-            // Lazy way of greatly decreasing hash code collision.
-            // Using powers of two (rather than 10 & 100) to hopefully get further compile time optimization since it allows for shifting.
-            // The naïve x ^ y ^ z (with or without GetHashCode) is more than 5 magnitudes slower when parsing the BS12 map.
-            return x ^ (y * 16) ^ (z * 128);
-        }
+        #endregion
+
+        #region Public Methods and Operators
 
         public override bool Equals(object obj)
         {
@@ -48,17 +63,27 @@ namespace SS13MapVerifier.Map
             }
 
             var otherCoord = obj as Coordinate;
-            return otherCoord != null && Equals(otherCoord);
+            return otherCoord != null && this.Equals(otherCoord);
         }
 
         public bool Equals(Coordinate other)
         {
-            return x == other.X && y == other.Y && z == other.Z;
+            return this.x == other.X && this.y == other.Y && this.z == other.Z;
+        }
+
+        public override int GetHashCode()
+        {
+            // Lazy way of greatly decreasing hash code collision.
+            // Using powers of two (rather than 10 & 100) to hopefully get further compile time optimization since it allows for shifting.
+            // The naïve x ^ y ^ z (with or without GetHashCode) is more than 5 magnitudes slower when parsing the BS12 map.
+            return this.x ^ (this.y * 16) ^ (this.z * 128);
         }
 
         public override string ToString()
         {
-            return x + "-" + y + "-" + z;
+            return this.x + "-" + this.y + "-" + this.z;
         }
+
+        #endregion
     }
 }

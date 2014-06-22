@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="IMap.cs" />
+    <Compile Include="ITile.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

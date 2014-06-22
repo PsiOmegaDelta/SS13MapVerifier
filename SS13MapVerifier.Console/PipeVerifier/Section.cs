@@ -3,27 +3,25 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
-
 using SS13MapVerifier.Map;
-
 
 namespace SS13MapVerifier.Console.PipeVerifier
 {
     [Flags]
     public enum ContentType
     {
-        None = 0,
-        Cyan = 1,
-        Green = 2,
-        Scrubbers = 4,
-        Supply = 8,
-        Yellow = 16,
+        None = 0, 
+        Cyan = 1, 
+        Green = 2, 
+        Scrubbers = 4, 
+        Supply = 8, 
+        Yellow = 16, 
         Any = Cyan | Green | Scrubbers | Supply | Yellow
     }
 
     public enum SectionType
     {
-        Pipe,
+        Pipe, 
         Pump
     }
 
@@ -69,29 +67,29 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         #region Public Properties
 
-        public ContentType ContentType { get; private set; }
-
-        public ITile Tile { get; private set; }
-
         public string Content { get; private set; }
+
+        public ContentType ContentType { get; private set; }
 
         public Direction Directions
         {
             get
             {
-                return Input | Output;
+                return this.Input | this.Output;
             }
         }
+
+        public bool FullyConnected { get; set; }
+
+        public bool HasBeenVisited { get; set; }
 
         public Direction Input { get; private set; }
 
         public Direction Output { get; private set; }
 
-        public bool HasBeenVisited { get; set; }
-
-        public bool FullyConnected { get; set; }
-
         public SectionType SectionType { get; private set; }
+
+        public ITile Tile { get; private set; }
 
         #endregion
 

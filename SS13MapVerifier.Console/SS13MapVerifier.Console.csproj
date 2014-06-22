@@ -60,7 +60,7 @@
       <Project>{49D242E6-7D13-4513-B8E3-0C72FBEE66DB}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SS13MapVerifierMap\SS13MapVerifier.Map.csproj">
+    <ProjectReference Include="..\SS13MapVerifier.Map\SS13MapVerifier.Map.csproj">
       <Project>{DC67D251-2365-4C95-8D32-4C3E70F779F2}</Project>
       <Name>SS13MapVerifier.Map</Name>
     </ProjectReference>

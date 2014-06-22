@@ -15,7 +15,7 @@ namespace SS13MapVerifier.Console
             var pipe = new ThereShallBeOnlyBeTwoPipeLines();
             foreach (var log in pipe.ValidateMap(map).Concat(apc.ValidateMap(map).Concat(purity.ValidateMap(map))))
             {
-                System.Console.WriteLine(log.Severity + " - " +log.Message + " - " + log.Tiles.First().Coordinate);
+                System.Console.WriteLine(log.Severity + " - " + log.Message + " - " + log.Tiles.First().Coordinate);
             }
 
             System.Console.WriteLine("Done");

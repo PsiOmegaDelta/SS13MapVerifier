@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
 using Common.Extensions;
 
 namespace SS13MapVerifier.Map
@@ -40,29 +38,12 @@ namespace SS13MapVerifier.Map
             }
         }
 
-        public bool HasContent(string content)
-        {
-            return Contents.Any(x => x.Equals(content));
-        }
-
         public Coordinate Coordinate
         {
             get
             {
                 return this.coordinate;
             }
-        }
-
-        public ITile GetNeighbour(Direction direction)
-        {
-            ITile tile;
-            neighbours.TryGetValue(direction, out tile);
-            return tile;
-        }
-
-        internal void AddNeighbour(Direction direction, ITile tile)
-        {
-            neighbours.Add(direction, tile);
         }
 
         #endregion
@@ -72,30 +53,41 @@ namespace SS13MapVerifier.Map
         public override bool Equals(object obj)
         {
             var tile = obj as ITile;
-            return tile != null && Equals(tile);
+            return tile != null && this.Equals(tile);
         }
 
         public bool Equals(ITile other)
         {
-            return Coordinate.Equals(other.Coordinate) && EnumerableExtensions.CompareTo(this.Contents, other.Contents) == 0;
+            return this.Coordinate.Equals(other.Coordinate)
+                   && EnumerableExtensions.CompareTo(this.Contents, other.Contents) == 0;
         }
 
         public override int GetHashCode()
         {
-            return Coordinate.GetHashCode() ^ this.Contents.GetHashCode();
+            return this.Coordinate.GetHashCode() ^ this.Contents.GetHashCode();
+        }
+
+        public ITile GetNeighbour(Direction direction)
+        {
+            ITile tile;
+            this.neighbours.TryGetValue(direction, out tile);
+            return tile;
+        }
+
+        public bool HasContent(string content)
+        {
+            return this.Contents.Any(x => x.Equals(content));
         }
 
         #endregion
-    }
 
-    public interface ITile : IEquatable<ITile>
-    {
-        IEnumerable<string> Contents { get; }
+        #region Methods
 
-        bool HasContent(string content);
+        internal void AddNeighbour(Direction direction, ITile tile)
+        {
+            this.neighbours.Add(direction, tile);
+        }
 
-        Coordinate Coordinate { get; }
-
-        ITile GetNeighbour(Direction direction);
+        #endregion
     }
 }

@@ -30,7 +30,7 @@ namespace SS13MapVerifier.Test
         public void ShallReturnMinusOneIfSameLengthButLesserElements()
         {
             var collectionOne = new List<int> { 1 };
-            var collectionTwo = new List<int> { 2};
+            var collectionTwo = new List<int> { 2 };
             Assert.AreEqual(-1, EnumerableExtensions.CompareTo(collectionOne, collectionTwo));
         }
 
