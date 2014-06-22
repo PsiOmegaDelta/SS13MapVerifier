@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
+using SS13MapVerifier.Console.PipeVerifier.Parsers;
 using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console.PipeVerifier
@@ -30,7 +30,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
     {
         #region Static Fields
 
-        private static readonly IEnumerable<ISectionParser> Parsers = new List<ISectionParser> { new PipeParser() };
+        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser() };
 
         #endregion
 
@@ -46,21 +46,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
             this.Output = result.Item2;
             this.SectionType = result.Item3;
             this.ContentType = result.Item4;
-        }
-
-        #endregion
-
-        #region Interfaces
-
-        internal interface ISectionParser
-        {
-            #region Public Methods and Operators
-
-            bool CanParse(string content);
-
-            Tuple<Direction, Direction, SectionType, ContentType> Parse(string content);
-
-            #endregion
         }
 
         #endregion
@@ -101,89 +86,5 @@ namespace SS13MapVerifier.Console.PipeVerifier
         }
 
         #endregion
-
-        private class PipeParser : ISectionParser
-        {
-            #region Fields
-
-            private readonly Regex canParse = new Regex("^/obj/machinery/atmospherics/pipe/simple.*$");
-
-            private readonly Regex getDir = new Regex("dir = (\\d+)");
-
-            #endregion
-
-            #region Public Methods and Operators
-
-            public bool CanParse(string content)
-            {
-                return this.canParse.IsMatch(content);
-            }
-
-            public Tuple<Direction, Direction, SectionType, ContentType> Parse(string content)
-            {
-                var directions = this.GetDirections(content);
-                var connectionType = GetConnectionType(content);
-
-                return Tuple.Create(directions, directions, SectionType.Pipe, connectionType);
-            }
-
-            #endregion
-
-            #region Methods
-
-            private static Direction GetAllDirections(Direction original, Direction either, Direction or)
-            {
-                if ((original ^ either) == 0)
-                {
-                    original |= or;
-                }
-                else if ((original ^ or) == 0)
-                {
-                    original |= either;
-                }
-
-                return original;
-            }
-
-            private static ContentType GetConnectionType(string content)
-            {
-                if (content.Contains("cyan"))
-                {
-                    return ContentType.Cyan;
-                }
-
-                if (content.Contains("green"))
-                {
-                    return ContentType.Green;
-                }
-
-                if (content.Contains("scrubbers"))
-                {
-                    return ContentType.Scrubbers;
-                }
-
-                if (content.Contains("supply"))
-                {
-                    return ContentType.Supply;
-                }
-
-                if (content.Contains("yellow"))
-                {
-                    return ContentType.Yellow;
-                }
-
-                return ContentType.Any;
-            }
-
-            private Direction GetDirections(string content)
-            {
-                var regedDir = this.getDir.Match(content);
-                var directions = regedDir.Success ? (Direction)int.Parse(regedDir.Groups[1].Value) : (Direction)2;
-                return GetAllDirections(directions, Direction.North, Direction.South)
-                       | GetAllDirections(directions, Direction.West, Direction.East);
-            }
-
-            #endregion
-        }
     }
 }

@@ -9,7 +9,8 @@ namespace SS13MapVerifier.Console
     {
         public static void Main(string[] args)
         {
-            var map = MapParser.ParseFile(@"C:\Users\nick\Documents\Baystation12-Dev\maps\Circle.dmm");
+            System.Console.WriteLine("Enter path to map");
+            var map = MapParser.ParseFile(System.Console.ReadLine());
             var apc = new ShallBeOneAndOnlyOneApcInEachArea();
             var purity = new OnlyAllowPureAreaInstances();
             var pipe = new ThereShallBeOnlyBeTwoPipeLines();
