@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS13MapVerifier.Console", "SS13MapVerifier.Console\SS13MapVerifier.Console.csproj", "{D323AC5B-C066-4172-B3EE-17352C527838}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS13MapVerifier.Map", "SS13MapVerifier.Map\SS13MapVerifier.Map.csproj", "{DC67D251-2365-4C95-8D32-4C3E70F779F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C7EB51C7-9E3A-47E6-A242-0FEFF8BBAA97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS13MapVerifier.Test", "SS13MapVerifier.Test\SS13MapVerifier.Test.csproj", "{0AD55AC1-906D-4740-8C1C-F7DDF424C0F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{49D242E6-7D13-4513-B8E3-0C72FBEE66DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D323AC5B-C066-4172-B3EE-17352C527838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D323AC5B-C066-4172-B3EE-17352C527838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D323AC5B-C066-4172-B3EE-17352C527838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D323AC5B-C066-4172-B3EE-17352C527838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC67D251-2365-4C95-8D32-4C3E70F779F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC67D251-2365-4C95-8D32-4C3E70F779F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC67D251-2365-4C95-8D32-4C3E70F779F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC67D251-2365-4C95-8D32-4C3E70F779F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AD55AC1-906D-4740-8C1C-F7DDF424C0F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD55AC1-906D-4740-8C1C-F7DDF424C0F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD55AC1-906D-4740-8C1C-F7DDF424C0F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD55AC1-906D-4740-8C1C-F7DDF424C0F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49D242E6-7D13-4513-B8E3-0C72FBEE66DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D242E6-7D13-4513-B8E3-0C72FBEE66DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D242E6-7D13-4513-B8E3-0C72FBEE66DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D242E6-7D13-4513-B8E3-0C72FBEE66DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0AD55AC1-906D-4740-8C1C-F7DDF424C0F9} = {C7EB51C7-9E3A-47E6-A242-0FEFF8BBAA97}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal
