@@ -3,7 +3,7 @@
 namespace SS13MapVerifier.Map
 {
     [Flags]
-    public enum Direction
+    public enum Directions
     {
         None = 0,
         North = 1,
@@ -15,28 +15,28 @@ namespace SS13MapVerifier.Map
         Any = North | South | West | South | Up | Down
     }
 
-    public static class Directions
+    public static class Direction
     {
-        public static Direction GetOppositeDirection(Direction direction)
+        public static Directions GetOppositeDirection(Directions direction)
         {
             switch (direction)
             {
-                case Direction.North:
-                    return Direction.South;
-                case Direction.East:
-                    return Direction.West;
-                case Direction.South:
-                    return Direction.North;
-                case Direction.West:
-                    return Direction.East;
-                case Direction.Up:
-                    return Direction.Down;
-                case Direction.Down:
-                    return Direction.Up;
-                case Direction.Any:
-                    return Direction.None;
-                case Direction.None:
-                    return Direction.Any;
+                case Directions.North:
+                    return Directions.South;
+                case Directions.East:
+                    return Directions.West;
+                case Directions.South:
+                    return Directions.North;
+                case Directions.West:
+                    return Directions.East;
+                case Directions.Up:
+                    return Directions.Down;
+                case Directions.Down:
+                    return Directions.Up;
+                case Directions.Any:
+                    return Directions.None;
+                case Directions.None:
+                    return Directions.Any;
                 default:
                     throw new ArgumentOutOfRangeException("direction");
             }

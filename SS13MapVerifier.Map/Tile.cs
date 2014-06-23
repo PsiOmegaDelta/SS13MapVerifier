@@ -10,21 +10,19 @@ namespace SS13MapVerifier.Map
     public class Tile : ITile
     {
         #region Fields
-
-        private readonly IList<Atom> atoms = new List<Atom>();
-
+        
         private readonly Coordinate coordinate;
 
-        private readonly IDictionary<Direction, ITile> neighbours = new Dictionary<Direction, ITile>();
+        private readonly IDictionary<Directions, ITile> neighbours = new Dictionary<Directions, ITile>();
 
         #endregion
 
         #region Constructors and Destructors
 
-        public Tile(Coordinate coordinate, object settings)
+        public Tile(Coordinate coordinate, IEnumerable<Atom> atoms)
         {
             this.coordinate = coordinate;
-            throw new NotImplementedException("setting");
+            Atoms = atoms;
         }
 
         #endregion
@@ -39,13 +37,7 @@ namespace SS13MapVerifier.Map
             }
         }
 
-        public IEnumerable<Atom> Atoms
-        {
-            get
-            {
-                return atoms;
-            }
-        }
+        public IEnumerable<Atom> Atoms { get; private set; }
 
         #endregion
 
@@ -57,18 +49,18 @@ namespace SS13MapVerifier.Map
             return tile != null && this.Equals(tile);
         }
 
+        // Assumption: One tile per coordinate
         public bool Equals(ITile other)
         {
-            return this.Coordinate.Equals(other.Coordinate)
-                   && this.Atoms.Equal(other.Atoms);
+            return this.Coordinate.Equals(other.Coordinate);
         }
 
         public override int GetHashCode()
         {
-            return this.Coordinate.GetHashCode() ^ this.Atoms.GetHashCode();
+            return this.Coordinate.GetHashCode();
         }
 
-        public ITile GetNeighbour(Direction direction)
+        public ITile GetNeighbour(Directions direction)
         {
             ITile tile;
             this.neighbours.TryGetValue(direction, out tile);
@@ -79,7 +71,7 @@ namespace SS13MapVerifier.Map
 
         #region Methods
 
-        internal void AddNeighbour(Direction direction, ITile tile)
+        internal void AddNeighbour(Directions direction, ITile tile)
         {
             this.neighbours.Add(direction, tile);
         }

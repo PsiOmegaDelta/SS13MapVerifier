@@ -16,7 +16,7 @@ namespace SS13MapVerifier.Test
             var tileExpected = MakeTile(2, 1, 1);
             var map = new Map.Map(new[] { tileOrigo, tileExpected, MakeTile(1, 2, 1), MakeTile(2, 2, 1) });
 
-            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Direction.East));
+            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Directions.East));
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace SS13MapVerifier.Test
             var tileOrigo = MakeTile(1, 1, 1);
             var tileExpected = MakeTile(1, 2, 1);
             var map = new Map.Map(new[] { tileOrigo, tileExpected, MakeTile(2, 1, 1), MakeTile(2, 2, 1) });
-            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Direction.North));
+            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Directions.North));
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace SS13MapVerifier.Test
         {
             var tileOrigo = MakeTile(1, 1, 1);
             var map = new Map.Map(new[] { tileOrigo, MakeTile(1, 2, 1), MakeTile(2, 1, 1), MakeTile(2, 2, 1) });
-            Assert.IsNull(map.GetNeighbour(tileOrigo, Direction.West));
+            Assert.IsNull(map.GetNeighbour(tileOrigo, Directions.West));
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace SS13MapVerifier.Test
         {
             var tileOrigo = MakeTile(1, 1, 1);
             var map = new Map.Map(new[] { tileOrigo, MakeTile(1, 2, 1), MakeTile(2, 1, 1), MakeTile(2, 2, 1) });
-            Assert.IsNull(map.GetNeighbour(tileOrigo, Direction.South));
+            Assert.IsNull(map.GetNeighbour(tileOrigo, Directions.South));
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace SS13MapVerifier.Test
             var tileOrigo = MakeTile(1, 1, 1);
             var tileExpected = MakeTile(1, 1, 2);
             var map = new Map.Map(new[] { tileOrigo, tileExpected, MakeTile(1, 2, 1), MakeTile(2, 1, 1), MakeTile(2, 2, 1) });
-            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Direction.Up));
+            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Directions.Up));
         }
 
         [TestMethod]
@@ -59,12 +59,12 @@ namespace SS13MapVerifier.Test
             var tileOrigo = MakeTile(1, 1, 1);
             var tileExpected = MakeTile(1, 1, 0);
             var map = new Map.Map(new[] { tileOrigo, tileExpected, MakeTile(1, 2, 1), MakeTile(2, 1, 1), MakeTile(2, 2, 1) });
-            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Direction.Down));
+            Assert.AreEqual(tileExpected, map.GetNeighbour(tileOrigo, Directions.Down));
         }
 
         private static Tile MakeTile(int x, int y, int z)
         {
-            return new Tile(new Coordinate(x, y, z), Enumerable.Empty<string>());
+            return new Tile(new Coordinate(x, y, z), Enumerable.Empty<Atom>());
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SS13MapVerifier.Map
 
         #region Public Methods and Operators
 
-        ITile GetNeighbour(ITile tile, Direction direction);
+        ITile GetNeighbour(ITile tile, Directions direction);
 
         ITile GetTileAtCoordinate(Coordinate coordinate);
 

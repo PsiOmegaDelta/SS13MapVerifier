@@ -11,8 +11,9 @@ namespace SS13MapVerifier.Test
         #region Constants
 
         private const string ContentLineOne = "\"a\" = (/turf/simulated/floor,/area/atmos)";
-        private const string ContentLineTwo = "\"b\" = (/turf/simulated/floor{name = \"Test\"},/bluegrid,/area/AIsattele)";
+        private const string ContentLineTwo = "\"b\" = (/turf/simulated/floor/bluegrid{name = \"Te\\\"st\"; icon_state = \"1-2\"},/turf/simulated/floor,/area/AIsattele{name = \"Another \\\" Test\"})";
         private const string ContentLineThree = "\"abc\" = (/obj/machinery/camera{c_tag = \"Bedroom\"; dir = 6; network = list(\"SS13\",\"Prison\")},/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor,/area/security/prison)";
+        private const string ContentLineFour = "\"d\" = (/obj/machinery/camera{c_tag = \"Medbay Port Corridor\"; dir = 8; network = list(\"SS13\")},/obj/structure/disposalpipe/segment,/obj/machinery/light_switch{pixel_x = 22; pixel_y = 0},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 4; icon_state = \"whiteblue\"; tag = \"icon-whitehall (WEST)\"},/area/medical/medbay2)";
 
         #endregion
 
@@ -50,6 +51,12 @@ namespace SS13MapVerifier.Test
         public void ShallBeAbleToParseLineThree()
         {
             ParseLine(ContentLineThree, this.contentLineTwoResult.Item1, this.contentLineTwoResult.Item2);
+        }
+
+        [TestMethod]
+        public void ShallBeAbleToParseLineFour()
+        {
+            ParseLine(ContentLineFour, this.contentLineTwoResult.Item1, this.contentLineTwoResult.Item2);
         }
 
         #endregion

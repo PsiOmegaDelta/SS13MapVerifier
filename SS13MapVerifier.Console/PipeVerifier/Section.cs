@@ -11,19 +11,20 @@ namespace SS13MapVerifier.Console.PipeVerifier
     [Flags]
     public enum ContentType
     {
-        None = 0, 
-        Cyan = 1, 
-        Green = 2, 
-        Scrubbers = 4, 
-        Supply = 8, 
-        Yellow = 16, 
+        None = 0,
+        Cyan = 1,
+        Green = 2,
+        Scrubbers = 4,
+        Supply = 8,
+        Yellow = 16,
         Any = Cyan | Green | Scrubbers | Supply | Yellow
     }
 
     public enum SectionType
     {
-        Pipe, 
-        Pump
+        Pipe,
+        Pump,
+        Unary
     }
 
     [DebuggerDisplay("{Directions} - {ContentType} - {SectionType}")]
@@ -31,7 +32,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
     {
         #region Static Fields
 
-        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser() };
+        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser() };
 
         #endregion
 
@@ -54,7 +55,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         public ContentType ContentType { get; private set; }
 
-        public Direction Directions
+        public Directions Directions
         {
             get
             {
@@ -62,17 +63,33 @@ namespace SS13MapVerifier.Console.PipeVerifier
             }
         }
 
-        public bool FullyConnected { get; set; }
+        public bool FullyConnected
+        {
+            get
+            {
+                return (Directions & ConnectedDirections) == Directions;
+            }
+        }
 
         public bool HasBeenVisited { get; set; }
 
-        public Direction Input { get; private set; }
+        public Directions Input { get; private set; }
 
-        public Direction Output { get; private set; }
+        public Directions Output { get; private set; }
 
         public SectionType SectionType { get; private set; }
 
         public ITile Tile { get; private set; }
+
+        public Directions ConnectedDirections { get; set; }
+
+        public Directions UnconnectedDirections
+        {
+            get
+            {
+                return Directions ^ ConnectedDirections;
+            }
+        }
 
         #endregion
 

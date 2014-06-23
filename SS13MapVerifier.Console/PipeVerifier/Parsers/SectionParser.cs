@@ -10,7 +10,7 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         public abstract bool CanParse(Atom atom);
 
-        public abstract Tuple<Direction, Direction, SectionType, ContentType> Parse(Atom atom);
+        public abstract Tuple<Directions, Directions, SectionType, ContentType> Parse(Atom atom);
 
         #endregion
 
@@ -46,10 +46,10 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
             return ContentType.Any;
         }
 
-        protected Direction GetDirection(Atom atom, Direction defaultDirection)
+        protected Directions GetDirection(Atom atom, Directions defaultDirection)
         {
             int result;
-            return int.TryParse(atom.Setting("dir"), out result) ? (Direction)result : defaultDirection;
+            return int.TryParse(atom.GetSetting("dir"), out result) ? (Directions)result : defaultDirection;
         }
 
         #endregion

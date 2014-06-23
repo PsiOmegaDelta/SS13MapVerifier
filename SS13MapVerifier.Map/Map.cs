@@ -39,10 +39,10 @@ namespace SS13MapVerifier.Map
 
         #region Public Methods and Operators
 
-        public ITile GetNeighbour(ITile tile, Direction direction)
+        public ITile GetNeighbour(ITile tile, Directions direction)
         {
             var neighbour = tile.GetNeighbour(direction);
-            if (neighbour == null && (direction == Direction.Up || direction == Direction.Down))
+            if (neighbour == null && (direction == Directions.Up || direction == Directions.Down))
             {
                 Tile result;
                 if (this.map.TryGetValue(GetNewCoordinates(direction, tile.Coordinate), out result))
@@ -65,22 +65,22 @@ namespace SS13MapVerifier.Map
 
         #region Methods
 
-        private static Coordinate GetNewCoordinates(Direction direction, Coordinate coordinate)
+        private static Coordinate GetNewCoordinates(Directions direction, Coordinate coordinate)
         {
             int newX = coordinate.X, newY = coordinate.Y, newZ = coordinate.Z;
             switch (direction)
             {
-                case Direction.East:
-                case Direction.West:
-                    newX = direction == Direction.East ? newX + 1 : newX - 1;
+                case Directions.East:
+                case Directions.West:
+                    newX = direction == Directions.East ? newX + 1 : newX - 1;
                     break;
-                case Direction.North:
-                case Direction.South:
-                    newY = direction == Direction.North ? newY + 1 : newY - 1;
+                case Directions.North:
+                case Directions.South:
+                    newY = direction == Directions.North ? newY + 1 : newY - 1;
                     break;
-                case Direction.Up:
-                case Direction.Down:
-                    newZ = direction == Direction.Up ? newZ + 1 : newZ - 1;
+                case Directions.Up:
+                case Directions.Down:
+                    newZ = direction == Directions.Up ? newZ + 1 : newZ - 1;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("direction");
@@ -89,7 +89,7 @@ namespace SS13MapVerifier.Map
             return new Coordinate(newX, newY, newZ);
         }
 
-        private Tile AcquireNeighbour(ITile tile, Direction direction)
+        private Tile AcquireNeighbour(ITile tile, Directions direction)
         {
             Tile neighbourTile;
             var newCoords = GetNewCoordinates(direction, tile.Coordinate);
@@ -99,11 +99,11 @@ namespace SS13MapVerifier.Map
 
         private void SetupNeighbours(Tile tile)
         {
-            foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+            foreach (Directions direction in Enum.GetValues(typeof(Directions)))
             {
                 // If you want the neighbour setup to go 0.5-1 second faster, filter out Z-level connections as well
                 // Just remember to do something about the pipe verification that can go between Z-levels.
-                if (direction == Direction.None || direction == Direction.Any)
+                if (direction == Directions.None || direction == Directions.Any)
                 {
                     continue;
                 }
@@ -115,7 +115,7 @@ namespace SS13MapVerifier.Map
                 }
 
                 tile.AddNeighbour(direction, neighbour);
-                neighbour.AddNeighbour(Directions.GetOppositeDirection(direction), tile);
+                neighbour.AddNeighbour(Direction.GetOppositeDirection(direction), tile);
             }
         }
 

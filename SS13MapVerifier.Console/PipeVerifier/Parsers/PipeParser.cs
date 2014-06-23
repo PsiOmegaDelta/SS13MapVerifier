@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console.PipeVerifier.Parsers
@@ -8,7 +7,7 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
     {
         #region Fields
 
-        private readonly Regex canParse = new Regex("^/obj/machinery/atmospherics/pipe/simple.*$");
+        private const string CanParseType = "/obj/machinery/atmospherics/pipe/simple";
 
         #endregion
 
@@ -16,10 +15,10 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         public override bool CanParse(Atom atom)
         {
-            return this.canParse.IsMatch(atom.Type);
+            return atom.Type.StartsWith(CanParseType);
         }
 
-        public override Tuple<Direction, Direction, SectionType, ContentType> Parse(Atom atom)
+        public override Tuple<Directions, Directions, SectionType, ContentType> Parse(Atom atom)
         {
             var directions = this.GetDirections(atom);
             var connectionType = GetConnectionType(atom);
@@ -31,7 +30,7 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         #region Methods
 
-        private static Direction GetAllDirections(Direction original, Direction either, Direction or)
+        private static Directions GetAllDirections(Directions original, Directions either, Directions or)
         {
             if ((original ^ either) == 0)
             {
@@ -45,11 +44,11 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
             return original;
         }
 
-        private Direction GetDirections(Atom atom)
+        private Directions GetDirections(Atom atom)
         {
-            var directions = this.GetDirection(atom, (Direction)2);
-            return GetAllDirections(directions, Direction.North, Direction.South)
-                   | GetAllDirections(directions, Direction.West, Direction.East);
+            var directions = this.GetDirection(atom, (Directions)2);
+            return GetAllDirections(directions, Directions.North, Directions.South)
+                   | GetAllDirections(directions, Directions.West, Directions.East);
         }
 
         #endregion

@@ -37,12 +37,11 @@ namespace SS13MapVerifier.Map
 
         public static IMap ParseFile(string path)
         {
-            var contents = new Dictionary<string, object>();
+            var contents = new Dictionary<string, IEnumerable<Atom>>();
             using (var file = new StreamReader(new FileStream(path, FileMode.Open)))
             {
                 ParseContents(file, contents);
-                var tiles = ParseZLayers(file, contents).ToList();
-
+                var tiles = ParseZLayers(file, contents);
                 return new Map(tiles);
             }
         }
@@ -51,17 +50,17 @@ namespace SS13MapVerifier.Map
 
         #region Methods
 
-        internal static Tuple<string, object> ParseContentLine(string content)
+        internal static Tuple<string, IEnumerable<Atom>> ParseContentLine(string content)
         {
             var reg = ContentRegex.Match(content);
             var key = reg.Groups[1].Value;
             var value = reg.Groups[2].Value;
-            object values = RowParser.Parse(value).ToList();
+            var values = RowParser.Parse(value);
 
             return Tuple.Create(key, values);
         }
 
-        private static void ParseContents(TextReader file, IDictionary<string, object> contents)
+        private static void ParseContents(TextReader file, IDictionary<string, IEnumerable<Atom>> contents)
         {
             string line;
             var contentKeyLength = -1;
@@ -88,7 +87,7 @@ namespace SS13MapVerifier.Map
         private static IEnumerable<Tile> ParseZLayer(
             IList<string> rows,
             int currentZLayer,
-            IDictionary<string, object> contents)
+            IDictionary<string, IEnumerable<Atom>> contents)
         {
             if (contents.Count == 0)
             {
@@ -109,7 +108,7 @@ namespace SS13MapVerifier.Map
 
         private static IEnumerable<Tile> ParseZLayers(
             TextReader file,
-            IDictionary<string, object> contents)
+            IDictionary<string, IEnumerable<Atom>> contents)
         {
             var state = ZLayerState.EndOfLayer;
             string readLine;

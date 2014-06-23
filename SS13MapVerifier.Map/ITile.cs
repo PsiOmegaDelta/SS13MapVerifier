@@ -15,7 +15,7 @@ namespace SS13MapVerifier.Map
 
         #region Public Methods and Operators
 
-        ITile GetNeighbour(Direction direction);
+        ITile GetNeighbour(Directions direction);
 
         #endregion
     }
