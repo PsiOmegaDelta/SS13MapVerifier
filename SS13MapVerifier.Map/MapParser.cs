@@ -16,19 +16,9 @@ namespace SS13MapVerifier.Map
 
         #region Static Fields
 
-        private static readonly Regex ContentRegex;
+        private static readonly Regex ContentRegex = new Regex("^\"(.*)\" = \\((.*)\\)$");
 
-        private static readonly Regex ZLayerStart;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        static MapParser()
-        {
-            ContentRegex = new Regex("^\"(.*)\" = \\((.*)\\)$");
-            ZLayerStart = new Regex("^\\(1,1,(\\d+)\\) = {\\\"$");
-        }
+        private static readonly Regex ZLayerStart = new Regex("^\\(1,1,(\\d+)\\) = {\\\"$");
 
         #endregion
 
@@ -36,7 +26,7 @@ namespace SS13MapVerifier.Map
 
         private enum ZLayerState
         {
-            ReadingLayer, 
+            ReadingLayer,
 
             EndOfLayer
         }
@@ -47,7 +37,7 @@ namespace SS13MapVerifier.Map
 
         public static IMap ParseFile(string path)
         {
-            var contents = new Dictionary<string, IEnumerable<string>>();
+            var contents = new Dictionary<string, object>();
             using (var file = new StreamReader(new FileStream(path, FileMode.Open)))
             {
                 ParseContents(file, contents);
@@ -61,19 +51,17 @@ namespace SS13MapVerifier.Map
 
         #region Methods
 
-        internal static Tuple<string, IEnumerable<string>> ParseContentLine(string content)
+        internal static Tuple<string, object> ParseContentLine(string content)
         {
             var reg = ContentRegex.Match(content);
-            var two = reg.Groups[1].Value;
-            var three = reg.Groups[2].Value;
+            var key = reg.Groups[1].Value;
+            var value = reg.Groups[2].Value;
+            object values = RowParser.Parse(value).ToList();
 
-            // Can probably use regex groups to pre-split on , but without an Internet connection I'm not going to bother looking up how
-            return new Tuple<string, IEnumerable<string>>(
-                two, 
-                three.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+            return Tuple.Create(key, values);
         }
 
-        private static void ParseContents(TextReader file, IDictionary<string, IEnumerable<string>> contents)
+        private static void ParseContents(TextReader file, IDictionary<string, object> contents)
         {
             string line;
             var contentKeyLength = -1;
@@ -88,8 +76,8 @@ namespace SS13MapVerifier.Map
                 {
                     throw new InvalidDataException(
                         string.Format(
-                            "Found content with unexpected key length. Expected {0}, was {1}.", 
-                            contentKeyLength, 
+                            "Found content with unexpected key length. Expected {0}, was {1}.",
+                            contentKeyLength,
                             content.Item1.Length));
                 }
 
@@ -98,9 +86,9 @@ namespace SS13MapVerifier.Map
         }
 
         private static IEnumerable<Tile> ParseZLayer(
-            IList<string> rows, 
-            int currentZLayer, 
-            IDictionary<string, IEnumerable<string>> contents)
+            IList<string> rows,
+            int currentZLayer,
+            IDictionary<string, object> contents)
         {
             if (contents.Count == 0)
             {
@@ -120,8 +108,8 @@ namespace SS13MapVerifier.Map
         }
 
         private static IEnumerable<Tile> ParseZLayers(
-            TextReader file, 
-            IDictionary<string, IEnumerable<string>> contents)
+            TextReader file,
+            IDictionary<string, object> contents)
         {
             var state = ZLayerState.EndOfLayer;
             string readLine;

@@ -46,6 +46,9 @@
   <ItemGroup>
     <Compile Include="Log.cs" />
     <Compile Include="OnlyAllowPureAreaInstances.cs" />
+    <Compile Include="PipeVerifier\Parsers\ManifoldParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\PipeParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\SectionParser.cs" />
     <Compile Include="PipeVerifier\Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

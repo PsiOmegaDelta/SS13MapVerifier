@@ -20,28 +20,29 @@ namespace SS13MapVerifier.Console
             {
                 // We do not care for space or areas in space. 
                 // Assumption: Only one turf per tile
-                if (tile.Contents.Any(x => "/turf/space".Equals(x)) || tile.Contents.Any(x => "/area".Equals(x))
-                    || tile.Contents.Any(x => x.StartsWith("/area/holodeck/"))
-                    || tile.Contents.Any(x => x.StartsWith("/area/shuttle/"))
-                    || tile.Contents.Any(x => x.StartsWith("/area/solar/"))
-                    || tile.Contents.Any(x => x.Equals("/area/mine/unexplored"))
-                    || tile.Contents.Any(x => x.Equals("/area/mine/abandoned")))
+                if (tile.Atoms.Any(x => "/turf/space".Equals(x.Type)) || tile.Atoms.Any(x => "/area".Equals(x.Type))
+                    || tile.Atoms.Any(x => x.Type.StartsWith("/area/holodeck/"))
+                    || tile.Atoms.Any(x => x.Type.StartsWith("/area/shuttle/"))
+                    || tile.Atoms.Any(x => x.Type.StartsWith("/area/solar/"))
+                    || tile.Atoms.Any(x => x.Type.Equals("/area/mine/unexplored"))
+                    || tile.Atoms.Any(x => x.Type.Equals("/area/mine/abandoned")))
                 {
                     continue;
                 }
 
-                var areaName = tile.Contents.FirstOrDefault(x => x.StartsWith("/area/"));
-                if (areaName == null)
+                var area = tile.Atoms.FirstOrDefault(x => x.Type.StartsWith("/area/"));
+                if (area == null)
                 {
-                    var log = new Log("Non-space tile without non-space area", Severity.Error);
+                    var log = new Log("Non-space turf without non-space area", Severity.Error);
                     log.AddTile(tile);
                     yield return log;
+                    yield break;
                 }
 
                 var numberOfApcs =
-                    tile.Contents.Count(
-                        x => x.Equals("/obj/machinery/power/apc") || x.StartsWith("/obj/machinery/power/apc{"));
-                var counter = apcCount.SafeGetValue(areaName, () => new ApcCounter());
+                    tile.Atoms.Count(
+                        x => x.Type.Equals("/obj/machinery/power/apc") || x.Type.StartsWith("/obj/machinery/power/apc{"));
+                var counter = apcCount.SafeGetValue(area.Type, () => new ApcCounter());
                 counter.Count += numberOfApcs;
                 counter.Tiles.Add(tile);
             }

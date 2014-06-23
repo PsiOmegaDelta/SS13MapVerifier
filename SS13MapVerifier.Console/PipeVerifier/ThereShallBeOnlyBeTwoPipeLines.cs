@@ -16,9 +16,9 @@ namespace SS13MapVerifier.Console.PipeVerifier
             var tileToSections = new Dictionary<ITile, IList<Section>>();
             foreach (var tile in map.Tiles)
             {
-                foreach (var content in tile.Contents.Where(Section.IsSection))
+                foreach (var atom in tile.Atoms.Where(Section.IsSection))
                 {
-                    tileToSections.SafeGetValue(tile, () => new List<Section>()).Add(new Section(tile, content));
+                    tileToSections.SafeGetValue(tile, () => new List<Section>()).Add(new Section(tile, atom));
                 }
             }
 

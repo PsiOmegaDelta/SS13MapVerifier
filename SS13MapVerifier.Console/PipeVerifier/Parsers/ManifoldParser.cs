@@ -9,12 +9,12 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 {
     internal class ManifoldParser : SectionParser
     {
-        public override bool CanParse(string content)
+        public override bool CanParse(Atom atom)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
-        public override Tuple<Direction, Direction, SectionType, ContentType> Parse(string content)
+        public override Tuple<Direction, Direction, SectionType, ContentType> Parse(Atom atom)
         {
             throw new NotImplementedException();
         }

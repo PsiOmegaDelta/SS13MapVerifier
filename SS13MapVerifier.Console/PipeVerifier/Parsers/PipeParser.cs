@@ -14,15 +14,15 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         #region Public Methods and Operators
 
-        public override bool CanParse(string content)
+        public override bool CanParse(Atom atom)
         {
-            return this.canParse.IsMatch(content);
+            return this.canParse.IsMatch(atom.Type);
         }
 
-        public override Tuple<Direction, Direction, SectionType, ContentType> Parse(string content)
+        public override Tuple<Direction, Direction, SectionType, ContentType> Parse(Atom atom)
         {
-            var directions = this.GetDirections(content);
-            var connectionType = GetConnectionType(content);
+            var directions = this.GetDirections(atom);
+            var connectionType = GetConnectionType(atom);
 
             return Tuple.Create(directions, directions, SectionType.Pipe, connectionType);
         }
@@ -45,9 +45,9 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
             return original;
         }
 
-        private Direction GetDirections(string content)
+        private Direction GetDirections(Atom atom)
         {
-            var directions = this.GetDirection(content, (Direction)2);
+            var directions = this.GetDirection(atom, (Direction)2);
             return GetAllDirections(directions, Direction.North, Direction.South)
                    | GetAllDirections(directions, Direction.West, Direction.East);
         }

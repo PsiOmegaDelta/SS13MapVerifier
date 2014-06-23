@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 using SS13MapVerifier.Console.PipeVerifier.Parsers;
 using SS13MapVerifier.Map;
 
@@ -36,12 +37,11 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         #region Constructors and Destructors
 
-        public Section(ITile tile, string content)
+        public Section(ITile tile, Atom atom)
         {
             this.Tile = tile;
-            this.Content = content;
-            var parser = Parsers.Single(x => x.CanParse(content));
-            var result = parser.Parse(content);
+            var parser = Parsers.Single(x => x.CanParse(atom));
+            var result = parser.Parse(atom);
             this.Input = result.Item1;
             this.Output = result.Item2;
             this.SectionType = result.Item3;
@@ -51,8 +51,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
         #endregion
 
         #region Public Properties
-
-        public string Content { get; private set; }
 
         public ContentType ContentType { get; private set; }
 
@@ -80,9 +78,9 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         #region Public Methods and Operators
 
-        public static bool IsSection(string content)
+        public static bool IsSection(Atom atom)
         {
-            return Parsers.SingleOrDefault(x => x.CanParse(content)) != null;
+            return Parsers.SingleOrDefault(x => x.CanParse(atom)) != null;
         }
 
         #endregion

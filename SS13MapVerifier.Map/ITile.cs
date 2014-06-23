@@ -7,17 +7,15 @@ namespace SS13MapVerifier.Map
     {
         #region Public Properties
 
-        IEnumerable<string> Contents { get; }
-
         Coordinate Coordinate { get; }
+
+        IEnumerable<Atom> Atoms { get; }
 
         #endregion
 
         #region Public Methods and Operators
 
         ITile GetNeighbour(Direction direction);
-
-        bool HasContent(string content);
 
         #endregion
     }

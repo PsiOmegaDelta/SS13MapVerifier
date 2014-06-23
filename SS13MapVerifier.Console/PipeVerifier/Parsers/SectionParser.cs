@@ -1,50 +1,44 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+
 using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 {
     internal abstract class SectionParser
     {
-        #region Fields
-
-        private readonly Regex getDir = new Regex("dir = (\\d+)");
-
-        #endregion
-
         #region Public Methods and Operators
 
-        public abstract bool CanParse(string content);
+        public abstract bool CanParse(Atom atom);
 
-        public abstract Tuple<Direction, Direction, SectionType, ContentType> Parse(string content);
+        public abstract Tuple<Direction, Direction, SectionType, ContentType> Parse(Atom atom);
 
         #endregion
 
         #region Methods
 
-        protected static ContentType GetConnectionType(string content)
+        protected static ContentType GetConnectionType(Atom atom)
         {
-            if (content.Contains("cyan"))
+            if (atom.Type.Contains("cyan"))
             {
                 return ContentType.Cyan;
             }
 
-            if (content.Contains("green"))
+            if (atom.Type.Contains("green"))
             {
                 return ContentType.Green;
             }
 
-            if (content.Contains("scrubbers"))
+            if (atom.Type.Contains("scrubbers"))
             {
                 return ContentType.Scrubbers;
             }
 
-            if (content.Contains("supply"))
+            if (atom.Type.Contains("supply"))
             {
                 return ContentType.Supply;
             }
 
-            if (content.Contains("yellow"))
+            if (atom.Type.Contains("yellow"))
             {
                 return ContentType.Yellow;
             }
@@ -52,10 +46,10 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
             return ContentType.Any;
         }
 
-        protected Direction GetDirection(string content, Direction defaultDirection)
+        protected Direction GetDirection(Atom atom, Direction defaultDirection)
         {
-            var regDir = this.getDir.Match(content);
-            return regDir.Success ? (Direction)int.Parse(regDir.Groups[1].Value) : defaultDirection;
+            int result;
+            return int.TryParse(atom.Setting("dir"), out result) ? (Direction)result : defaultDirection;
         }
 
         #endregion

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+
 using Common.Extensions;
 
 namespace SS13MapVerifier.Map
@@ -10,7 +11,7 @@ namespace SS13MapVerifier.Map
     {
         #region Fields
 
-        private readonly IEnumerable<string> contents;
+        private readonly IList<Atom> atoms = new List<Atom>();
 
         private readonly Coordinate coordinate;
 
@@ -20,29 +21,29 @@ namespace SS13MapVerifier.Map
 
         #region Constructors and Destructors
 
-        public Tile(Coordinate coordinate, IEnumerable<string> contents)
+        public Tile(Coordinate coordinate, object settings)
         {
             this.coordinate = coordinate;
-            this.contents = contents;
+            throw new NotImplementedException("setting");
         }
 
         #endregion
 
         #region Public Properties
 
-        public IEnumerable<string> Contents
-        {
-            get
-            {
-                return this.contents;
-            }
-        }
-
         public Coordinate Coordinate
         {
             get
             {
                 return this.coordinate;
+            }
+        }
+
+        public IEnumerable<Atom> Atoms
+        {
+            get
+            {
+                return atoms;
             }
         }
 
@@ -59,12 +60,12 @@ namespace SS13MapVerifier.Map
         public bool Equals(ITile other)
         {
             return this.Coordinate.Equals(other.Coordinate)
-                   && EnumerableExtensions.CompareTo(this.Contents, other.Contents) == 0;
+                   && this.Atoms.Equal(other.Atoms);
         }
 
         public override int GetHashCode()
         {
-            return this.Coordinate.GetHashCode() ^ this.Contents.GetHashCode();
+            return this.Coordinate.GetHashCode() ^ this.Atoms.GetHashCode();
         }
 
         public ITile GetNeighbour(Direction direction)
@@ -72,11 +73,6 @@ namespace SS13MapVerifier.Map
             ITile tile;
             this.neighbours.TryGetValue(direction, out tile);
             return tile;
-        }
-
-        public bool HasContent(string content)
-        {
-            return this.Contents.Any(x => x.Equals(content));
         }
 
         #endregion
