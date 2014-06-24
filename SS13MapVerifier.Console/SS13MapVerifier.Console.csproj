@@ -50,6 +50,7 @@
     <Compile Include="PipeVerifier\Parsers\ManifoldParser.cs" />
     <Compile Include="PipeVerifier\Parsers\PipeParser.cs" />
     <Compile Include="PipeVerifier\Parsers\SectionParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\TrinaryParser.cs" />
     <Compile Include="PipeVerifier\Parsers\UnaryParser.cs" />
     <Compile Include="PipeVerifier\Section.cs" />
     <Compile Include="Program.cs" />

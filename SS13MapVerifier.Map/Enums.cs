@@ -42,5 +42,39 @@ namespace SS13MapVerifier.Map
                     throw new ArgumentOutOfRangeException("direction");
             }
         }
+
+        public static Directions GetDirection90DegreesClockWise(Directions direction)
+        {
+            switch (direction)
+            {
+                case Directions.North:
+                    return Directions.East;
+                case Directions.East:
+                    return Directions.South;
+                case Directions.South:
+                    return Directions.West;
+                case Directions.West:
+                    return Directions.North;
+                default:
+                    throw new ArgumentOutOfRangeException("direction");
+            }
+        }
+
+        public static Directions GetDirection90DegreesCounterClockWise(Directions direction)
+        {
+            switch (direction)
+            {
+                case Directions.North:
+                    return Directions.West;
+                case Directions.East:
+                    return Directions.North;
+                case Directions.South:
+                    return Directions.East;
+                case Directions.West:
+                    return Directions.South;
+                default:
+                    throw new ArgumentOutOfRangeException("direction");
+            }
+        }
     }
 }

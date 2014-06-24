@@ -24,18 +24,20 @@ namespace SS13MapVerifier.Console.PipeVerifier
     {
         Pipe,
         Pump,
-        Binary,
         Unary,
+        Binary,
         Manifold,
-        ManifoldFourway
+        ManifoldFourway,
+        Filter,
+        Mixer
     }
 
-    [DebuggerDisplay("{SectionType} - {ContentType} - {Directions}")]
+    [DebuggerDisplay("{SectionType} = {ContentType} = {Input} = {Output}")]
     public class Section
     {
         #region Static Fields
 
-        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser(), new BinaryParser() };
+        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser(), new BinaryParser(), new TrinaryParser() };
 
         #endregion
 
@@ -86,7 +88,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
         public override string ToString()
         {
 
-            return string.Format("{0} - {1} - {2}", SectionType, ContentType, Directions);
+            return string.Format("{0} = {1} = {2} = {3}", SectionType, ContentType, Input, Output);
         }
 
         #endregion

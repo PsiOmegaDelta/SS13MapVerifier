@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Threading;
 
 using Common.Extensions;
 
@@ -27,9 +24,11 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
             var visitedSupplyections = new HashSet<Section>();
             var connectedDirectionsSupply = new Dictionary<Section, Directions>();
+            var supplySections = new List<Section>();
             while (tileToSections.SelectMany(x => x.Value).ToArray().Any(y => !visitedSupplyections.Contains(y) && y.ContentType == ContentType.Supply))
             {
                 var startSection = tileToSections.SelectMany(x => x.Value).First(x => !visitedSupplyections.Contains(x) && x.ContentType == ContentType.Supply);
+                supplySections.Add(startSection);
                 VisitNeighbours(tileToSections, startSection, ContentType.Supply, visitedSupplyections, connectedDirectionsSupply);
             }
 
@@ -37,7 +36,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
             var visitedPipes = allPipes.Where(visitedSupplyections.Contains).ToArray();
             var otherPipes = allPipes.Where(x => !visitedSupplyections.Contains(x)).ToArray();
 
-            var unconnectedPipes = allPipes.Where(x => (!connectedDirectionsSupply.ContainsKey(x) || ((connectedDirectionsSupply[x] ^ x.Directions) != 0))).ToArray();
+            var unconnectedPipes = allPipes.Where(x => x.ContentType == ContentType.Supply && (!connectedDirectionsSupply.ContainsKey(x) || ((connectedDirectionsSupply[x] ^ x.Directions) != 0))).ToArray();
 
             yield break;
         }
