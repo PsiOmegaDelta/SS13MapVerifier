@@ -29,7 +29,11 @@ namespace SS13MapVerifier.Console.PipeVerifier
         Manifold,
         ManifoldFourway,
         Filter,
-        Mixer
+        Mixer,
+        Valve,
+        TValve,
+        PortablesConnector,
+        Tank
     }
 
     [DebuggerDisplay("{SectionType} = {ContentType} = {Input} = {Output}")]
@@ -37,7 +41,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
     {
         #region Static Fields
 
-        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser(), new BinaryParser(), new TrinaryParser() };
+        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser(), new BinaryParser(), new TrinaryParser(), new ValveParser(), new PortablesConnectorParser(), new TankParser() };
 
         #endregion
 
@@ -87,7 +91,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         public override string ToString()
         {
-
             return string.Format("{0} = {1} = {2} = {3}", SectionType, ContentType, Input, Output);
         }
 

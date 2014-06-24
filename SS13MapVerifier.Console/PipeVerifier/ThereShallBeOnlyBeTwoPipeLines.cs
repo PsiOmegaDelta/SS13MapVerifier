@@ -25,22 +25,22 @@ namespace SS13MapVerifier.Console.PipeVerifier
             var visitedSupplyections = new HashSet<Section>();
             var connectedDirectionsSupply = new Dictionary<Section, Directions>();
             var supplySections = new List<Section>();
-            while (tileToSections.SelectMany(x => x.Value).ToArray().Any(y => !visitedSupplyections.Contains(y) && y.ContentType == ContentType.Supply))
+            while (tileToSections.SelectMany(x => x.Value).ToArray().Any(y => !visitedSupplyections.Contains(y) && y.ContentType == ContentType.Scrubbers))
             {
-                var startSection = tileToSections.SelectMany(x => x.Value).First(x => !visitedSupplyections.Contains(x) && x.ContentType == ContentType.Supply);
+                var startSection = tileToSections.SelectMany(x => x.Value).First(x => !visitedSupplyections.Contains(x) && x.ContentType == ContentType.Scrubbers);
                 supplySections.Add(startSection);
-                VisitNeighbours(tileToSections, startSection, ContentType.Supply, visitedSupplyections, connectedDirectionsSupply);
+                VisitNeighbours(tileToSections, startSection, ContentType.Scrubbers, visitedSupplyections, connectedDirectionsSupply);
             }
 
             var allPipes = tileToSections.SelectMany(x => x.Value).ToArray();
             var visitedPipes = allPipes.Where(visitedSupplyections.Contains).ToArray();
             var otherPipes = allPipes.Where(x => !visitedSupplyections.Contains(x)).ToArray();
 
-            var unconnectedPipes = allPipes.Where(x => x.ContentType == ContentType.Supply && (!connectedDirectionsSupply.ContainsKey(x) || ((connectedDirectionsSupply[x] ^ x.Directions) != 0))).ToArray();
+            var unconnectedPipes = allPipes.Where(x => x.ContentType == ContentType.Scrubbers && (!connectedDirectionsSupply.ContainsKey(x) || ((connectedDirectionsSupply[x] ^ x.Directions) != 0))).ToArray();
 
             yield break;
         }
-
+        
         private static bool IsSupplyOrScrubber(ContentType contentType)
         {
             return contentType == ContentType.Scrubbers || contentType == ContentType.Supply;
