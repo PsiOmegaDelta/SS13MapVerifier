@@ -24,15 +24,18 @@ namespace SS13MapVerifier.Console.PipeVerifier
     {
         Pipe,
         Pump,
-        Unary
+        Binary,
+        Unary,
+        Manifold,
+        ManifoldFourway
     }
 
-    [DebuggerDisplay("{Directions} - {ContentType} - {SectionType}")]
+    [DebuggerDisplay("{SectionType} - {ContentType} - {Directions}")]
     public class Section
     {
         #region Static Fields
 
-        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser() };
+        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser(), new BinaryParser() };
 
         #endregion
 
@@ -63,16 +66,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
             }
         }
 
-        public bool FullyConnected
-        {
-            get
-            {
-                return (Directions & ConnectedDirections) == Directions;
-            }
-        }
-
-        public bool HasBeenVisited { get; set; }
-
         public Directions Input { get; private set; }
 
         public Directions Output { get; private set; }
@@ -81,16 +74,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         public ITile Tile { get; private set; }
 
-        public Directions ConnectedDirections { get; set; }
-
-        public Directions UnconnectedDirections
-        {
-            get
-            {
-                return Directions ^ ConnectedDirections;
-            }
-        }
-
         #endregion
 
         #region Public Methods and Operators
@@ -98,6 +81,12 @@ namespace SS13MapVerifier.Console.PipeVerifier
         public static bool IsSection(Atom atom)
         {
             return Parsers.SingleOrDefault(x => x.CanParse(atom)) != null;
+        }
+
+        public override string ToString()
+        {
+
+            return string.Format("{0} - {1} - {2}", SectionType, ContentType, Directions);
         }
 
         #endregion

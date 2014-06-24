@@ -21,7 +21,7 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
         public override Tuple<Directions, Directions, SectionType, ContentType> Parse(Atom atom)
         {
             var directions = this.GetDirections(atom);
-            var connectionType = GetConnectionType(atom);
+            var connectionType = GetContentType(atom);
 
             return Tuple.Create(directions, directions, SectionType.Pipe, connectionType);
         }

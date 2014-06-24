@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading;
 
 using Common.Extensions;
@@ -24,36 +25,40 @@ namespace SS13MapVerifier.Console.PipeVerifier
                 }
             }
 
-            while (tileToSections.SelectMany(x => x.Value).ToArray().Any(y => !y.HasBeenVisited && y.ContentType.HasFlag(ContentType.Supply)))
+            var visitedSupplyections = new HashSet<Section>();
+            var connectedDirectionsSupply = new Dictionary<Section, Directions>();
+            while (tileToSections.SelectMany(x => x.Value).ToArray().Any(y => !visitedSupplyections.Contains(y) && y.ContentType == ContentType.Supply))
             {
-                var startSection = tileToSections.SelectMany(x => x.Value).First(x => !x.HasBeenVisited && x.ContentType.HasFlag(ContentType.Supply));
-                VisitNeighbours(tileToSections, startSection, ContentType.Supply, Directions.Any);
+                var startSection = tileToSections.SelectMany(x => x.Value).First(x => !visitedSupplyections.Contains(x) && x.ContentType == ContentType.Supply);
+                VisitNeighbours(tileToSections, startSection, ContentType.Supply, visitedSupplyections, connectedDirectionsSupply);
             }
 
             var allPipes = tileToSections.SelectMany(x => x.Value).ToArray();
-            var visitedPipes = allPipes.Where(x => x.HasBeenVisited).ToArray();
-            var otherPipes = allPipes.Where(x => !x.HasBeenVisited).ToArray();
+            var visitedPipes = allPipes.Where(visitedSupplyections.Contains).ToArray();
+            var otherPipes = allPipes.Where(x => !visitedSupplyections.Contains(x)).ToArray();
 
-            var unconnectedPipes = allPipes.Where(x => !x.FullyConnected && ContentTypesIntersect(x.ContentType, ContentType.Supply)).ToArray();
+            var unconnectedPipes = allPipes.Where(x => (!connectedDirectionsSupply.ContainsKey(x) || ((connectedDirectionsSupply[x] ^ x.Directions) != 0))).ToArray();
 
             yield break;
         }
 
-        private static void VisitNeighbours(IDictionary<ITile, IList<Section>> tileToSections, Section section, ContentType contentType, Directions direction)
+        private static bool IsSupplyOrScrubber(ContentType contentType)
         {
-            // var directions = section.Directions.GetFlags().OfType<Directions>().Except(new[] { Directions.None, Directions.Any }).ToArray();
-            // section.FullyConnected = directions.All(x => GetSectionsFromTile(tileToSections, section.Tile.GetNeighbour(x), x).Any(y => ContentTypesIntersect(section.ContentType, y.ContentType)));
+            return contentType == ContentType.Scrubbers || contentType == ContentType.Supply;
+        }
 
-            section.HasBeenVisited = true;
-            foreach (var pipeDirection in section.Directions.GetFlags().OfType<Directions>().Except(new[] { Directions.None, Directions.Any }))
+        private static void VisitNeighbours(IDictionary<ITile, IList<Section>> tileToSections, Section section, ContentType contentType, ISet<Section> visitedSections, IDictionary<Section, Directions> connectedDirections)
+        {
+            visitedSections.Add(section);
+            foreach (var pipeDirection in section.Directions.GetFlags().OfType<Directions>().Except(new[] { Directions.None, Directions.Cardinal, Directions.Any }))
             {
                 var neighbourTile = section.Tile.GetNeighbour(pipeDirection);
                 foreach (var neighbour in GetSectionsFromTile(tileToSections, neighbourTile, pipeDirection).Where(x => ContentTypesIntersect(section.ContentType, x.ContentType)))
                 {
-                    section.ConnectedDirections |= pipeDirection;
-                    if (!neighbour.HasBeenVisited && ContentTypesIntersect(neighbour.ContentType, contentType))
+                    connectedDirections[section] = connectedDirections.SafeGetValue(section, () => Directions.None) | pipeDirection;
+                    if (!visitedSections.Contains(neighbour) && ContentTypesIntersect(neighbour.ContentType, contentType))
                     {
-                        VisitNeighbours(tileToSections, neighbour, contentType, pipeDirection);
+                        VisitNeighbours(tileToSections, neighbour, contentType, visitedSections, connectedDirections);
                     }
                 }
             }
@@ -81,28 +86,6 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
             var sections = tileToSections[tile].Where(x => DirectionsIntersect(x.Directions, Direction.GetOppositeDirection(direction)));
             return sections;
-        }
-
-        #endregion
-
-        #region Methods
-
-        private static Directions GetManifoldDirections(Directions enumDirection)
-        {
-            return (Directions.North | Directions.East | Directions.South | Directions.West) ^ enumDirection;
-        }
-
-        private Directions AcquireRelevantDirections(string content, int direction)
-        {
-            var enumDirection = (Directions)direction;
-            if (true)
-            {
-                enumDirection = enumDirection == Directions.None ? Directions.South : enumDirection;
-                enumDirection = GetManifoldDirections(enumDirection);
-                return enumDirection;
-            }
-
-            return enumDirection;
         }
 
         #endregion

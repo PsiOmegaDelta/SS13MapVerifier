@@ -8,8 +8,6 @@ namespace SS13MapVerifier.Map
 {
     internal static class RowParser
     {
-        // "/turf/space,/area"
-        // /obj/machinery/camera{c_tag = "Bedroom"; dir = 6; network = list("SS13","Prison")},/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor,/area/security/prison)
         public static IEnumerable<Atom> Parse(string row)
         {
             while (true)
@@ -61,7 +59,7 @@ namespace SS13MapVerifier.Map
                 var name = new string(row.SkipWhile(x => x == ' ' || x == ';').TakeWhile(x => x != ' ').ToArray());
                 row = new string(row.SkipWhile(x => x != '=').Skip(2).ToArray());
 
-                var value = string.Empty;
+                string value;
                 if (row.StartsWith("\""))
                 {
                     value = Regex.Match(row, @"""[^""\\]*(?:\\.[^""\\]*)*""").Value;
@@ -77,10 +75,6 @@ namespace SS13MapVerifier.Map
 
                 row = row.Substring(value.Length);
                 vars.Add(Tuple.Create(name, value));
-
-                if (string.IsNullOrEmpty(row))
-                {
-                }
             }
             while (!row.StartsWith("}"));
 

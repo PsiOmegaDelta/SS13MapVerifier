@@ -4,9 +4,9 @@ using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 {
-    internal class UnaryParser : SectionParser
+    internal class BinaryParser : SectionParser
     {
-        private const string CanParseType = "/obj/machinery/atmospherics/unary/";
+        private const string CanParseType = "/obj/machinery/atmospherics/binary";
 
         public override bool CanParse(Atom atom)
         {
@@ -15,8 +15,9 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         public override Tuple<Directions, Directions, SectionType, ContentType> Parse(Atom atom)
         {
-            var input = this.GetDirection(atom, (Directions)2);
-            return Tuple.Create(input, Directions.None, SectionType.Unary, ContentType.Any);
+            var output = this.GetDirection(atom, (Directions)2);
+            var input = Direction.GetOppositeDirection(output);
+            return Tuple.Create(input, output, SectionType.Binary, ContentType.Any);
         }
     }
 }

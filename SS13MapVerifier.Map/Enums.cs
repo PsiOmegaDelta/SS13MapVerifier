@@ -12,6 +12,7 @@ namespace SS13MapVerifier.Map
         West = 8,
         Up = 16,
         Down = 32,
+        Cardinal = North | South | West | East,
         Any = North | South | West | South | Up | Down
     }
 

@@ -103,7 +103,7 @@ namespace SS13MapVerifier.Map
             {
                 // If you want the neighbour setup to go 0.5-1 second faster, filter out Z-level connections as well
                 // Just remember to do something about the pipe verification that can go between Z-levels.
-                if (direction == Directions.None || direction == Directions.Any)
+                if (direction == Directions.None || direction == Directions.Any || direction == Directions.Cardinal)
                 {
                     continue;
                 }

@@ -16,7 +16,7 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         #region Methods
 
-        protected static ContentType GetConnectionType(Atom atom)
+        protected static ContentType GetContentType(Atom atom)
         {
             if (atom.Type.Contains("cyan"))
             {
