@@ -27,7 +27,7 @@ namespace SS13MapVerifier.Console
     {
         #region Fields
 
-        private readonly IList<ITile> tileses = new List<ITile>();
+        private readonly IList<ITile> tiles = new List<ITile>();
 
         #endregion
 
@@ -37,6 +37,23 @@ namespace SS13MapVerifier.Console
         {
             this.Severity = severity;
             this.Message = message;
+        }
+
+        public Log(string message, Severity severity, ITile tile)
+        {
+            this.Severity = severity;
+            this.Message = message;
+            this.tiles.Add(tile);
+        }
+
+        public Log(string message, Severity severity, IEnumerable<ITile> tiles)
+        {
+            this.Severity = severity;
+            this.Message = message;
+            foreach (var tile in tiles)
+            {
+                this.tiles.Add(tile);
+            }
         }
 
         #endregion
@@ -51,7 +68,7 @@ namespace SS13MapVerifier.Console
         {
             get
             {
-                return this.tileses;
+                return this.tiles;
             }
         }
 
@@ -61,7 +78,7 @@ namespace SS13MapVerifier.Console
 
         internal void AddTile(ITile tile)
         {
-            this.tileses.Add(tile);
+            this.tiles.Add(tile);
         }
 
         #endregion
