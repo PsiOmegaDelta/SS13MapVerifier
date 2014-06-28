@@ -58,6 +58,7 @@
     <Compile Include="PipeVerifier\Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShouldBeAtLeastOneAirAlarmInMostAreas.cs" />
     <Compile Include="ShallBeOneAndOnlyOneAPCInEachArea.cs" />
     <Compile Include="PipeVerifier\ThereShallBeOnlyBeTwoPipeLines.cs" />
   </ItemGroup>
