@@ -8,7 +8,7 @@ using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console
 {
-    internal class ShouldBeAtLeastOneAirAlarmInMostAreas
+    internal class ShouldBeAtLeastOneAirAlarmInMostAreas : IVerifier
     {
         #region Public Methods and Operators
 

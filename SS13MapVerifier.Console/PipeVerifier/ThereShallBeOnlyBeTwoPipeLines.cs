@@ -8,7 +8,7 @@ using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console.PipeVerifier
 {
-    internal class ThereShallBeOnlyBeTwoPipeLines
+    internal class ThereShallBeOnlyBeTwoPipeLines : IVerifier
     {
         #region Public Methods and Operators
 

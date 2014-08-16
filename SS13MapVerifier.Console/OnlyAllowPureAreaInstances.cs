@@ -6,7 +6,7 @@ using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console
 {
-    internal class OnlyAllowPureAreaInstances
+    internal class OnlyAllowPureAreaInstances : IVerifier
     {
         #region Public Methods and Operators
 

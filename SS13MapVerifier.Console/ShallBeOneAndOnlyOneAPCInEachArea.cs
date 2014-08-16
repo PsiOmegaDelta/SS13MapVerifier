@@ -8,7 +8,7 @@ using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console
 {
-    internal class ShallBeOneAndOnlyOneApcInEachArea
+    internal class ShallBeOneAndOnlyOneApcInEachArea : IVerifier
     {
         #region Public Methods and Operators
 

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 using SS13MapVerifier.Console.PipeVerifier;
 using SS13MapVerifier.Map;
@@ -11,16 +13,28 @@ namespace SS13MapVerifier.Console
         {
             System.Console.WriteLine("Enter path to map");
             var map = MapParser.ParseFile(System.Console.ReadLine());
-            var apc = new ShallBeOneAndOnlyOneApcInEachArea();
-            var purity = new OnlyAllowPureAreaInstances();
-            var pipe = new ThereShallBeOnlyBeTwoPipeLines();
-            foreach (var log in pipe.ValidateMap(map).Concat(apc.ValidateMap(map).Concat(purity.ValidateMap(map))))
+
+            var verifiers = new List<IVerifier>
+                                {
+                                    new ShallBeOneAndOnlyOneApcInEachArea(),
+                                    new OnlyAllowPureAreaInstances(),
+                                    new ThereShallBeOnlyBeTwoPipeLines(),
+                                    new ShouldBeAtLeastOneAirAlarmInMostAreas(),
+                                    new ShallHaveNoStackedPipes(),
+                                    new VentsShouldHaveProperDefaultSettings()
+                                };
+
+            Parallel.ForEach(verifiers, verifier => Verify(verifier, map));
+            System.Console.WriteLine("Done");
+            System.Console.ReadLine();
+        }
+
+        private static void Verify(IVerifier verifier, IMap map)
+        {
+            foreach (var log in verifier.ValidateMap(map))
             {
                 System.Console.WriteLine(log.Severity + " - " + log.Message + " - " + log.Tiles.First().Coordinate);
             }
-
-            System.Console.WriteLine("Done");
-            System.Console.ReadLine();
         }
     }
 }

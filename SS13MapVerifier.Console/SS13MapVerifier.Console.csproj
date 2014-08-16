@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IVerifier.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="OnlyAllowPureAreaInstances.cs" />
     <Compile Include="PipeVerifier\Parsers\BinaryParser.cs" />
@@ -54,13 +55,15 @@
     <Compile Include="PipeVerifier\Parsers\TankParser.cs" />
     <Compile Include="PipeVerifier\Parsers\TrinaryParser.cs" />
     <Compile Include="PipeVerifier\Parsers\UnaryParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\TValveParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\ValveParser.cs" />
     <Compile Include="PipeVerifier\Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShallHaveNoStackedPipes.cs" />
     <Compile Include="ShouldBeAtLeastOneAirAlarmInMostAreas.cs" />
     <Compile Include="ShallBeOneAndOnlyOneAPCInEachArea.cs" />
     <Compile Include="PipeVerifier\ThereShallBeOnlyBeTwoPipeLines.cs" />
+    <Compile Include="VentsShouldHaveProperDefaultSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
