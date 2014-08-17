@@ -22,20 +22,9 @@ namespace SS13MapVerifier.Console.Verifiers
 
                     if (!hasOneDirectionCable && atom.Type == Types.PowerCable)
                     {
-                        if (atom.Settings.Any(x => x.Key == "dir"))
-                        {
-                            var dir = (Directions)int.Parse(atom.Settings["dir"].Single());
-                            if (dir == Directions.North || dir == Directions.East || dir == Directions.South
-                                || dir == Directions.West)
-                            {
-                                hasOneDirectionCable = true;
-                            }
-                        }
-                        else
-                        {
-                            // No direction set implies dir = 2
-                            hasOneDirectionCable = true;
-                        }
+                        var dir1 = atom.GetSetting("d1", "0");
+                        var dir2 = atom.GetSetting("d2", "1");
+                        hasOneDirectionCable = (dir1 == "0" && dir2 != "0") || (dir1 != "0" && dir2 == "0");
                     }
                 }
 

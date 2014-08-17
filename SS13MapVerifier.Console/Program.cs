@@ -17,14 +17,14 @@ namespace SS13MapVerifier.Console
 
             var verifiers = new List<IVerifier>
                                 {
-                                    /*new AreaPowerControlsShallHaveOpenCableEndOnSameTurf(),
+                                    new AreaPowerControlsShallHaveOpenCableEndOnSameTurf(),
                                     new ShallBeOneAndOnlyOneApcInEachArea(),
                                     new OnlyAllowPureAreaInstances(),
                                     new ThereShallBeOnlyBeTwoPipeLines(),
                                     new ShouldBeAtLeastOneAirAlarmInMostAreas(),
-                                    new ShallHaveNoStackedPipes(),*/
+                                    new ShallHaveNoStackedPipes(),
                                     new ShallHaveNoStackedPowerCables(),
-                                    /*new VentsShouldHaveProperDefaultSettings()*/
+                                    new VentsShouldHaveProperDefaultSettings()
                                 };
 
             Parallel.ForEach(verifiers, verifier => Verify(verifier, map));

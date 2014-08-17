@@ -40,9 +40,7 @@ namespace SS13MapVerifier.Console.Verifiers
                     yield break;
                 }
 
-                var numberOfAirAlarms =
-                    tile.Atoms.Count(
-                        x => x.Type.Equals("/obj/machinery/alarm") || x.Type.StartsWith("/obj/machinery/alarm{"));
+                var numberOfAirAlarms = tile.Atoms.Count(x => x.Type == Types.AirAlarm);
                 var counter = apcCount.SafeGetValue(area.Type, () => new AirAlarmCounter());
                 counter.Count += numberOfAirAlarms;
                 counter.Tiles.Add(tile);

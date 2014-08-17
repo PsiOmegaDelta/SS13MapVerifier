@@ -7,5 +7,7 @@
         public static readonly string PowerCable = "/obj/structure/cable";
 
         public static readonly string UnaryVent = "/obj/machinery/atmospherics/unary/vent";
+
+        public static readonly string AirAlarm = "/obj/machinery/alarm";
     }
 }
