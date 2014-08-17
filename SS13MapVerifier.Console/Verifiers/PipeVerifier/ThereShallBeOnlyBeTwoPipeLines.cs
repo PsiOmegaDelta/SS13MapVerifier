@@ -6,7 +6,7 @@ using Common.Extensions;
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.PipeVerifier
+namespace SS13MapVerifier.Console.Verifiers.PipeVerifier
 {
     internal class ThereShallBeOnlyBeTwoPipeLines : IVerifier
     {

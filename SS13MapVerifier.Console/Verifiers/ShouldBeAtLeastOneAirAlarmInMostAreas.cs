@@ -6,7 +6,7 @@ using Common.Extensions;
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console
+namespace SS13MapVerifier.Console.Verifiers
 {
     internal class ShouldBeAtLeastOneAirAlarmInMostAreas : IVerifier
     {
@@ -24,6 +24,7 @@ namespace SS13MapVerifier.Console
                     || tile.Atoms.Any(x => x.Type.StartsWith("/area/holodeck/"))
                     || tile.Atoms.Any(x => x.Type.StartsWith("/area/shuttle/"))
                     || tile.Atoms.Any(x => x.Type.StartsWith("/area/solar/"))
+                    || tile.Atoms.Any(x => x.Type.Equals("/area/mine/explored"))
                     || tile.Atoms.Any(x => x.Type.Equals("/area/mine/unexplored"))
                     || tile.Atoms.Any(x => x.Type.Equals("/area/mine/abandoned")))
                 {

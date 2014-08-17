@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-using SS13MapVerifier.Console.PipeVerifier.Parsers;
+using SS13MapVerifier.Console.Verifiers.PipeVerifier.Parsers;
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.PipeVerifier
+namespace SS13MapVerifier.Console.Verifiers.PipeVerifier
 {
     [Flags]
     public enum ContentType
@@ -91,7 +91,7 @@ namespace SS13MapVerifier.Console.PipeVerifier
 
         public override string ToString()
         {
-            return string.Format("{0} = {1} = {2} = {3}", SectionType, ContentType, Input, Output);
+            return string.Format("{0} = {1} = {2} = {3}", this.SectionType, this.ContentType, this.Input, this.Output);
         }
 
         #endregion

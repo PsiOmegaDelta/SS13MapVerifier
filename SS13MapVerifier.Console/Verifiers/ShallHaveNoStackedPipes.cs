@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using SS13MapVerifier.Console.PipeVerifier;
-using SS13MapVerifier.Console.PipeVerifier.Parsers;
+using SS13MapVerifier.Console.Verifiers.PipeVerifier;
+using SS13MapVerifier.Console.Verifiers.PipeVerifier.Parsers;
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console
+namespace SS13MapVerifier.Console.Verifiers
 {
     internal class ShallHaveNoStackedPipes : IVerifier
     {
@@ -19,9 +19,9 @@ namespace SS13MapVerifier.Console
             foreach (var tile in map.Tiles)
             {
                 var visitedDirections = Directions.None;
-                foreach (var atom in tile.Atoms.Where(x => sectionParser.CanParse(x)))
+                foreach (var atom in tile.Atoms.Where(x => this.sectionParser.CanParse(x)))
                 {
-                    var result = sectionParser.Parse(atom);
+                    var result = this.sectionParser.Parse(atom);
                     var currentDirections = result.Item1 | result.Item2;
                     if ((currentDirections & visitedDirections) != 0)
                     {
@@ -52,12 +52,12 @@ namespace SS13MapVerifier.Console
 
             public override bool CanParse(Atom atom)
             {
-                return allParsers.SingleOrDefault(x => x.CanParse(atom)) != null;
+                return this.allParsers.SingleOrDefault(x => x.CanParse(atom)) != null;
             }
 
             public override Tuple<Directions, Directions, SectionType, ContentType> Parse(Atom atom)
             {
-                return allParsers.Single(x => x.CanParse(atom)).Parse(atom);
+                return this.allParsers.Single(x => x.CanParse(atom)).Parse(atom);
             }
         }
     }

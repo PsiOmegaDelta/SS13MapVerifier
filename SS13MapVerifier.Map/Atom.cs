@@ -30,9 +30,9 @@ namespace SS13MapVerifier.Map
             return this.Settings.Contains(name) ? this.Settings[name] : Enumerable.Empty<string>();
         }
 
-        public string GetSetting(string name)
+        public string GetSetting(string name, string defaultValue = "")
         {
-            return this.Settings.Contains(name) ? this.Settings[name].First() : string.Empty;
+            return this.Settings.Contains(name) ? this.Settings[name].Single() : defaultValue;
         }
 
         #endregion

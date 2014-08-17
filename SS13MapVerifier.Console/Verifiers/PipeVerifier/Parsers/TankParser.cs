@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.PipeVerifier.Parsers
+namespace SS13MapVerifier.Console.Verifiers.PipeVerifier.Parsers
 {
     internal class TankParser : SectionParser
     {

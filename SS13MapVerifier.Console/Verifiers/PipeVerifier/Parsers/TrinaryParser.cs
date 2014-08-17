@@ -2,7 +2,7 @@
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.PipeVerifier.Parsers
+namespace SS13MapVerifier.Console.Verifiers.PipeVerifier.Parsers
 {
     internal class TrinaryParser : SectionParser
     {
@@ -25,7 +25,7 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         private Tuple<Directions, Directions> GetMixerDirection(Atom atom)
         {
-            var output = GetDirection(atom, (Directions)2);
+            var output = this.GetDirection(atom, (Directions)2);
             Directions input;
             if (atom.Type.Contains("/m_"))
             {
@@ -47,7 +47,7 @@ namespace SS13MapVerifier.Console.PipeVerifier.Parsers
 
         private Tuple<Directions, Directions> GetFilterDirection(Atom atom)
         {
-            var output = GetDirection(atom, (Directions)2);
+            var output = this.GetDirection(atom, (Directions)2);
             var input = Direction.GetOppositeDirection(output);
             if (atom.Type.Contains("/m_"))
             {

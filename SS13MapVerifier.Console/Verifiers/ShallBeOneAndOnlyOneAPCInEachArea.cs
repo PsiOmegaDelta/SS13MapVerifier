@@ -6,7 +6,7 @@ using Common.Extensions;
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console
+namespace SS13MapVerifier.Console.Verifiers
 {
     internal class ShallBeOneAndOnlyOneApcInEachArea : IVerifier
     {
@@ -41,7 +41,7 @@ namespace SS13MapVerifier.Console
 
                 var numberOfApcs =
                     tile.Atoms.Count(
-                        x => x.Type.Equals("/obj/machinery/power/apc") || x.Type.StartsWith("/obj/machinery/power/apc{"));
+                        x => x.Type.Equals(Types.APC));
                 var counter = apcCount.SafeGetValue(area.Type, () => new ApcCounter());
                 counter.Count += numberOfApcs;
                 counter.Tiles.Add(tile);

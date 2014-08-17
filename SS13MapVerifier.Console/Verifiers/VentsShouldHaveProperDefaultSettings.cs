@@ -4,7 +4,7 @@ using System.Linq;
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console
+namespace SS13MapVerifier.Console.Verifiers
 {
     internal class VentsShouldHaveProperDefaultSettings : IVerifier
     {
@@ -12,9 +12,9 @@ namespace SS13MapVerifier.Console
         {
             foreach (var tile in map.Tiles)
             {
-                foreach (var atom in tile.Atoms.Where(x => x.Type.StartsWith("/obj/machinery/atmospherics/unary/vent")))
+                foreach (var atom in tile.Atoms.Where(x => x.Type == Types.UnaryVent))
                 {
-                    foreach (var setting in new[] { Tuple.Create("external_pressure_bound", new[] { "100", "101", "101.325" }), Tuple.Create("internal_pressure_bound", new[] { "0" }), Tuple.Create("pressure_checks", new[] { "1" }) })
+                    foreach (var setting in new[] { Tuple.Create("external_pressure_bound", new[] { "101.325" }), Tuple.Create("internal_pressure_bound", new[] { "0" }), Tuple.Create("pressure_checks", new[] { "1" }) })
                     {
                         var startValue = atom.GetSetting(setting.Item1);
                         var defaultValue = atom.GetSetting(setting.Item1 + "_default");
@@ -26,7 +26,7 @@ namespace SS13MapVerifier.Console
 
                         if (!startValue.Equals(defaultValue))
                         {
-                            yield return new Log(string.Format("Setting {0} does not equal the default setting. Start/Default values: {1}/{2}", setting.Item1, startValue, defaultValue), Severity.Warning, tile);
+                            yield return new Log(string.Format("{0} does not equal the default. Start/Default values: {1}/{2}", setting.Item1, startValue, defaultValue), Severity.Warning, tile);
                         }
                     }
                 }

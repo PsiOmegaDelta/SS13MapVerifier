@@ -2,9 +2,10 @@
 using System.Linq;
 
 using Common.Extensions;
+
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console
+namespace SS13MapVerifier.Console.Verifiers
 {
     internal class OnlyAllowPureAreaInstances : IVerifier
     {

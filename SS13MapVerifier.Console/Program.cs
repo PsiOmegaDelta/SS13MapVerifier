@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using SS13MapVerifier.Console.PipeVerifier;
+using SS13MapVerifier.Console.Verifiers;
+using SS13MapVerifier.Console.Verifiers.PipeVerifier;
 using SS13MapVerifier.Map;
 
 namespace SS13MapVerifier.Console
@@ -16,12 +17,14 @@ namespace SS13MapVerifier.Console
 
             var verifiers = new List<IVerifier>
                                 {
+                                    /*new AreaPowerControlsShallHaveOpenCableEndOnSameTurf(),
                                     new ShallBeOneAndOnlyOneApcInEachArea(),
                                     new OnlyAllowPureAreaInstances(),
                                     new ThereShallBeOnlyBeTwoPipeLines(),
                                     new ShouldBeAtLeastOneAirAlarmInMostAreas(),
-                                    new ShallHaveNoStackedPipes(),
-                                    new VentsShouldHaveProperDefaultSettings()
+                                    new ShallHaveNoStackedPipes(),*/
+                                    new ShallHaveNoStackedPowerCables(),
+                                    /*new VentsShouldHaveProperDefaultSettings()*/
                                 };
 
             Parallel.ForEach(verifiers, verifier => Verify(verifier, map));

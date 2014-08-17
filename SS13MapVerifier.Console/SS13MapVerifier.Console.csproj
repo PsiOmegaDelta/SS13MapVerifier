@@ -44,26 +44,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IVerifier.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="OnlyAllowPureAreaInstances.cs" />
-    <Compile Include="PipeVerifier\Parsers\BinaryParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\ManifoldParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\PipeParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\PortablesConnectorParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\SectionParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\TankParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\TrinaryParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\UnaryParser.cs" />
-    <Compile Include="PipeVerifier\Parsers\ValveParser.cs" />
-    <Compile Include="PipeVerifier\Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShallHaveNoStackedPipes.cs" />
-    <Compile Include="ShouldBeAtLeastOneAirAlarmInMostAreas.cs" />
-    <Compile Include="ShallBeOneAndOnlyOneAPCInEachArea.cs" />
-    <Compile Include="PipeVerifier\ThereShallBeOnlyBeTwoPipeLines.cs" />
-    <Compile Include="VentsShouldHaveProperDefaultSettings.cs" />
+    <Compile Include="Types.cs" />
+    <Compile Include="Verifiers\APCsShallHaveOpenCableEndOnSameTurf.cs" />
+    <Compile Include="Verifiers\IVerifier.cs" />
+    <Compile Include="Verifiers\OnlyAllowPureAreaInstances.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\BinaryParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\ManifoldParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\PipeParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\PortablesConnectorParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\SectionParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\TankParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\TrinaryParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\UnaryParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Parsers\ValveParser.cs" />
+    <Compile Include="Verifiers\PipeVerifier\Section.cs" />
+    <Compile Include="Verifiers\PipeVerifier\ThereShallBeOnlyBeTwoPipeLines.cs" />
+    <Compile Include="Verifiers\ShallBeOneAndOnlyOneAPCInEachArea.cs" />
+    <Compile Include="Verifiers\ShallHaveNoStackedPowerCables.cs" />
+    <Compile Include="Verifiers\ShallHaveNoStackedPipes.cs" />
+    <Compile Include="Verifiers\ShouldBeAtLeastOneAirAlarmInMostAreas.cs" />
+    <Compile Include="Verifiers\VentsShouldHaveProperDefaultSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
