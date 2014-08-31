@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.Extensions
 {
     public static class EnumerableExtensions
     {
+        public static T[] ToArrayEfficient<T>(this IEnumerable<T> source)
+        {
+            return source is T[] ? (T[])source : source.ToArray();
+        }
+
         public static int CompareTo<T>(this IEnumerable<T> source, IEnumerable<T> target)
             where T : IComparable<T>
         {

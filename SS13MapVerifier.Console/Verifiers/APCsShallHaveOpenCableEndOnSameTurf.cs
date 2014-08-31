@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using Common.Extensions;
+
 using SS13MapVerifier.Map;
+using SS13MapVerifier.Map.Constants;
 
 namespace SS13MapVerifier.Console.Verifiers
 {
@@ -15,12 +18,12 @@ namespace SS13MapVerifier.Console.Verifiers
                 var hasAPC = false;
                 foreach (var atom in tile.Atoms)
                 {
-                    if (atom.Type == Types.APC)
+                    if (atom.Type == Objects.APC)
                     {
                         hasAPC = true;
                     }
 
-                    if (!hasOneDirectionCable && atom.Type == Types.PowerCable)
+                    if (!hasOneDirectionCable && atom.Type.IsType(Objects.PowerCable))
                     {
                         var dir1 = atom.GetSetting("d1", "0");
                         var dir2 = atom.GetSetting("d2", "1");

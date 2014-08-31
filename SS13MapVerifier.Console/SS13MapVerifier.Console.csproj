@@ -47,8 +47,8 @@
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types.cs" />
     <Compile Include="Verifiers\APCsShallHaveOpenCableEndOnSameTurf.cs" />
+    <Compile Include="Verifiers\AreaCheckBase.cs" />
     <Compile Include="Verifiers\IVerifier.cs" />
     <Compile Include="Verifiers\OnlyAllowPureAreaInstances.cs" />
     <Compile Include="Verifiers\PipeVerifier\Parsers\BinaryParser.cs" />

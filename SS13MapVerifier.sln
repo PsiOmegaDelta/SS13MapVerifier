@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS13MapVerifier.Console", "SS13MapVerifier.Console\SS13MapVerifier.Console.csproj", "{D323AC5B-C066-4172-B3EE-17352C527838}"
 EndProject
@@ -41,5 +41,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0AD55AC1-906D-4740-8C1C-F7DDF424C0F9} = {C7EB51C7-9E3A-47E6-A242-0FEFF8BBAA97}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

@@ -43,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Atom.cs" />
+    <Compile Include="Constants\Areas.cs" />
+    <Compile Include="Constants\Objects.cs" />
+    <Compile Include="Constants\Turfs.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IMap.cs" />

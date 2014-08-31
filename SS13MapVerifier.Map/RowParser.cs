@@ -41,7 +41,7 @@ namespace SS13MapVerifier.Map
                 row = string.Empty;
             }
 
-            return new Tuple<string, string>(row, type);
+            return new Tuple<string, string>(row, type + @"/");
         }
 
         private static Tuple<string, IEnumerable<Tuple<string, string>>> ParseVars(string row)

@@ -32,9 +32,6 @@ namespace SS13MapVerifier.Console.Verifiers.PipeVerifier
             RunChecks(tileToSections, visitedSections, scrubbersSections, connectedDirections, ContentType.Scrubbers);
 
             var allPipes = tileToSections.SelectMany(x => x.Value);
-            //var visitedPipes = allPipes.Where(visitedSections.Contains).ToArray();
-            //var otherPipes = allPipes.Where(x => !visitedSections.Contains(x)).ToArray();
-
             var unconnectedPipes = allPipes.Where(x => (x.ContentType == ContentType.Scrubbers || x.ContentType == ContentType.Supply) && (!connectedDirections.ContainsKey(x) || ((connectedDirections[x] ^ x.Directions) != 0)));
 
             foreach (var unconnectedPipe in unconnectedPipes.OrderBy(x => x.ContentType))
@@ -70,6 +67,7 @@ namespace SS13MapVerifier.Console.Verifiers.PipeVerifier
             {
                 throw new ArgumentNullException("separateSections");
             }
+
             while (tileToSections.SelectMany(x => x.Value)
                     .ToArray()
                     .Any(y => !visitedSections.Contains(y) && y.ContentType == contentType))
@@ -85,11 +83,6 @@ namespace SS13MapVerifier.Console.Verifiers.PipeVerifier
                     visitedSections,
                     connectedDirections);
             }
-        }
-
-        private static bool IsSupplyOrScrubber(ContentType contentType)
-        {
-            return contentType == ContentType.Scrubbers || contentType == ContentType.Supply;
         }
 
         private static void VisitNeighbours(IDictionary<ITile, IList<Section>> tileToSections, Section section, ContentType contentType, ISet<Section> visitedSections, IDictionary<Section, Directions> connectedDirections)

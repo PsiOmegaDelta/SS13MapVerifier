@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using SS13MapVerifier.Map;
+using SS13MapVerifier.Map.Constants;
 
 namespace SS13MapVerifier.Console.Verifiers
 {
@@ -12,7 +13,7 @@ namespace SS13MapVerifier.Console.Verifiers
         {
             foreach (var tile in map.Tiles)
             {
-                foreach (var atom in tile.Atoms.Where(x => x.Type == Types.UnaryVent))
+                foreach (var atom in tile.Atoms.Where(x => x.Type == Objects.UnaryVent))
                 {
                     foreach (var setting in new[] { Tuple.Create("external_pressure_bound", new[] { "101.325" }), Tuple.Create("internal_pressure_bound", new[] { "0" }), Tuple.Create("pressure_checks", new[] { "1" }) })
                     {

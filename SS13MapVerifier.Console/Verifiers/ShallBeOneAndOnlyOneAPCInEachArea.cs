@@ -1,90 +1,66 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
-using Common.Extensions;
-
-using SS13MapVerifier.Map;
+using SS13MapVerifier.Map.Constants;
 
 namespace SS13MapVerifier.Console.Verifiers
 {
-    internal class ShallBeOneAndOnlyOneApcInEachArea : IVerifier
+    internal class ShallBeOneAndOnlyOneApcInEachArea : AreaCheckBase
     {
-        #region Public Methods and Operators
+        #region Properties
 
-        public IEnumerable<Log> ValidateMap(IMap map)
+        protected override Func<int, bool> BadCountPredicate
         {
-            var apcCount = new Dictionary<string, ApcCounter>();
-
-            foreach (var tile in map.Tiles.Where(x => x.Coordinate.Z == 1 || x.Coordinate.Z == 5))
+            get
             {
-                // We do not care for space or areas in space. 
-                // Assumption: Only one turf per tile
-                if (tile.Atoms.Any(x => "/turf/space".Equals(x.Type)) || tile.Atoms.Any(x => "/area".Equals(x.Type))
-                    || tile.Atoms.Any(x => x.Type.StartsWith("/area/holodeck/"))
-                    || tile.Atoms.Any(x => x.Type.StartsWith("/area/shuttle/"))
-                    || tile.Atoms.Any(x => x.Type.StartsWith("/area/solar/"))
-                    || tile.Atoms.Any(x => x.Type.Equals("/area/mine/unexplored"))
-                    || tile.Atoms.Any(x => x.Type.Equals("/area/mine/abandoned")))
-                {
-                    continue;
-                }
-
-                var area = tile.Atoms.FirstOrDefault(x => x.Type.StartsWith("/area/"));
-                if (area == null)
-                {
-                    var log = new Log("Non-space turf without non-space area", Severity.Error);
-                    log.AddTile(tile);
-                    yield return log;
-                    yield break;
-                }
-
-                var numberOfApcs =
-                    tile.Atoms.Count(
-                        x => x.Type.Equals(Types.APC));
-                var counter = apcCount.SafeGetValue(area.Type, () => new ApcCounter());
-                counter.Count += numberOfApcs;
-                counter.Tiles.Add(tile);
+                return count => count != 1;
             }
+        }
 
-            foreach (var badArea in apcCount.Where(x => x.Value.Count != 1))
+        protected override string CheckedType
+        {
+            get
             {
-                var log = new Log(
-                    string.Format("Bad APC count: {0} - {1}", badArea.Key, badArea.Value.Count), 
-                    Severity.Error);
-                foreach (var tile in badArea.Value.Tiles)
-                {
-                    log.AddTile(tile);
-                }
+                return Objects.APC;
+            }
+        }
 
-                yield return log;
+        protected override IEnumerable<int> CheckedZLevels
+        {
+            get
+            {
+                return new[] { 1, 5 };
+            }
+        }
+
+        protected override string ErrorMessage
+        {
+            get
+            {
+                return "Bad APC count";
+            }
+        }
+
+        protected override IEnumerable<string> IgnoredAreas
+        {
+            get
+            {
+                return new List<string>
+                           {
+                               Areas.Space, 
+                               Areas.SupplyStation, 
+                               Areas.SyndicateStation, 
+                               Areas.VoxStation, 
+                               Areas.Solar, 
+                               Areas.Shuttle, 
+                               Areas.Holodeck, 
+                               Areas.MineAbanoned, 
+                               Areas.MineUnexplored, 
+                               Areas.Genetics
+                           };
             }
         }
 
         #endregion
-
-        [DebuggerDisplay("{Count}")]
-        private class ApcCounter
-        {
-            #region Fields
-
-            private readonly IList<ITile> tiles = new List<ITile>();
-
-            #endregion
-
-            #region Public Properties
-
-            public int Count { get; set; }
-
-            public IList<ITile> Tiles
-            {
-                get
-                {
-                    return this.tiles;
-                }
-            }
-
-            #endregion
-        }
     }
 }

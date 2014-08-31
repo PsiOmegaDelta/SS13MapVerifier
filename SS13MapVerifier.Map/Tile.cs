@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics; 
 
 using Common.Extensions;
 
@@ -22,7 +21,7 @@ namespace SS13MapVerifier.Map
         public Tile(Coordinate coordinate, IEnumerable<Atom> atoms)
         {
             this.coordinate = coordinate;
-            Atoms = atoms;
+            Atoms = atoms.ToArrayEfficient();
         }
 
         #endregion
