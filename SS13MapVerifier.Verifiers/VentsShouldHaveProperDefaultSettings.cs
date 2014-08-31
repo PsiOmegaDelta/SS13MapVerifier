@@ -5,9 +5,9 @@ using System.Linq;
 using SS13MapVerifier.Map;
 using SS13MapVerifier.Map.Constants;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal class VentsShouldHaveProperDefaultSettings : IVerifier
+    public class VentsShouldHaveProperDefaultSettings : IVerifier
     {
         public IEnumerable<Log> ValidateMap(IMap map)
         {

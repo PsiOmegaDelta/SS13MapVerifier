@@ -5,9 +5,9 @@ using Common.Extensions;
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal class OnlyAllowPureAreaInstances : IVerifier
+    public class OnlyAllowPureAreaInstances : IVerifier
     {
         #region Public Methods and Operators
 

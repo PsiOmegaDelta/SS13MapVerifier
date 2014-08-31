@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using SS13MapVerifier.Map.Constants;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal class ShouldBeAtLeastOneAirAlarmInMostAreas : AreaCheckBase
+    public class ShallBeOneAndOnlyOneApcInEachArea : AreaCheckBase
     {
         #region Properties
 
@@ -12,7 +13,7 @@ namespace SS13MapVerifier.Console.Verifiers
         {
             get
             {
-                return count => count < 1;
+                return count => count != 1;
             }
         }
 
@@ -20,7 +21,7 @@ namespace SS13MapVerifier.Console.Verifiers
         {
             get
             {
-                return Objects.AirAlarm;
+                return Objects.APC;
             }
         }
 
@@ -36,7 +37,7 @@ namespace SS13MapVerifier.Console.Verifiers
         {
             get
             {
-                return "Bad air alarm count";
+                return "Bad APC count";
             }
         }
 
@@ -46,17 +47,16 @@ namespace SS13MapVerifier.Console.Verifiers
             {
                 return new List<string>
                            {
-                                Areas.Space,
-                                Areas.SupplyStation,
-                                Areas.SyndicateStation,
-                                Areas.VoxStation,
-                                Areas.Solar,
-                                Areas.Shuttle,
-                                Areas.Holodeck, 
-                                Areas.MineAbanoned,
-                                Areas.MineExplored,
-                                Areas.MineUnexplored,
-                                Areas.ToxinTestArea
+                               Areas.Space, 
+                               Areas.SupplyStation, 
+                               Areas.SyndicateStation, 
+                               Areas.VoxStation, 
+                               Areas.Solar, 
+                               Areas.Shuttle, 
+                               Areas.Holodeck, 
+                               Areas.MineAbanoned, 
+                               Areas.MineUnexplored, 
+                               Areas.Genetics
                            };
             }
         }

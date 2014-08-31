@@ -8,9 +8,9 @@ using Common.Extensions;
 using SS13MapVerifier.Map;
 using SS13MapVerifier.Map.Constants;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal abstract class AreaCheckBase : IVerifier
+    public abstract class AreaCheckBase : IVerifier
     {
         #region Properties
 
@@ -33,7 +33,7 @@ namespace SS13MapVerifier.Console.Verifiers
             var checkedTypeCount = new Dictionary<string, SupportCounter>();
             foreach (var tile in map.Tiles.Where(x => this.CheckedZLevels.Contains(x.Coordinate.Z)))
             {
-                if (tile.Atoms.SelectMany(atom => this.IgnoredAreas.Where(area => atom.Type.IsType(area))).Any())
+                if (Enumerable.Any<string>(tile.Atoms.SelectMany(atom => this.IgnoredAreas.Where(area => atom.Type.IsType(area)))))
                 {
                     continue;
                 }

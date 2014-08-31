@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using SS13MapVerifier.Console.Verifiers;
-using SS13MapVerifier.Console.Verifiers.PipeVerifier;
 using SS13MapVerifier.Map;
+using SS13MapVerifier.Verifiers;
+using SS13MapVerifier.Verifiers.PipeVerifier;
 
 namespace SS13MapVerifier.Console
 {
@@ -17,7 +17,7 @@ namespace SS13MapVerifier.Console
 
             var verifiers = new List<IVerifier>
                                 {
-                                    new AreaPowerControlsShallHaveOpenCableEndOnSameTurf(),
+                                    new TerminalsShallHaveOpenCableEndOnSameTurf(),
                                     new ShallBeOneAndOnlyOneApcInEachArea(),
                                     new OnlyAllowPureAreaInstances(),
                                     new ThereShallBeOnlyBeTwoPipeLines(),

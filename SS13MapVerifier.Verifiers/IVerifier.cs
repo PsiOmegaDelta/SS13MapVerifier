@@ -2,9 +2,9 @@
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal interface IVerifier
+    public interface IVerifier
     {
         IEnumerable<Log> ValidateMap(IMap map);
     }

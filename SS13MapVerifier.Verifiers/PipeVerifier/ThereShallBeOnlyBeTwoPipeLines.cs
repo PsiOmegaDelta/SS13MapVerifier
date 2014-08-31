@@ -6,9 +6,9 @@ using Common.Extensions;
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.Verifiers.PipeVerifier
+namespace SS13MapVerifier.Verifiers.PipeVerifier
 {
-    internal class ThereShallBeOnlyBeTwoPipeLines : IVerifier
+    public class ThereShallBeOnlyBeTwoPipeLines : IVerifier
     {
         #region Public Methods and Operators
 

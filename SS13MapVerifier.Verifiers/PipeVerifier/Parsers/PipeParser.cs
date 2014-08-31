@@ -2,7 +2,7 @@
 
 using SS13MapVerifier.Map;
 
-namespace SS13MapVerifier.Console.Verifiers.PipeVerifier.Parsers
+namespace SS13MapVerifier.Verifiers.PipeVerifier.Parsers
 {
     internal class PipeParser : SectionParser
     {

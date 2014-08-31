@@ -1,26 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 using Common.Extensions;
 
 using SS13MapVerifier.Map;
 using SS13MapVerifier.Map.Constants;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal class AreaPowerControlsShallHaveOpenCableEndOnSameTurf : IVerifier
+    public class TerminalsShallHaveOpenCableEndOnSameTurf : IVerifier
     {
         public IEnumerable<Log> ValidateMap(IMap map)
         {
             foreach (var tile in map.Tiles)
             {
                 var hasOneDirectionCable = false;
-                var hasAPC = false;
+                var requiresCableEnd = false;
                 foreach (var atom in tile.Atoms)
                 {
-                    if (atom.Type == Objects.APC)
+                    if (atom.Type == Objects.APC || atom.Type.IsType(Objects.PowerTerminal))
                     {
-                        hasAPC = true;
+                        requiresCableEnd = true;
                     }
 
                     if (!hasOneDirectionCable && atom.Type.IsType(Objects.PowerCable))
@@ -31,7 +30,7 @@ namespace SS13MapVerifier.Console.Verifiers
                     }
                 }
 
-                if (hasAPC && !hasOneDirectionCable)
+                if (requiresCableEnd && !hasOneDirectionCable)
                 {
                     yield return new Log("APC without power connection", Severity.Error, tile);
                 }

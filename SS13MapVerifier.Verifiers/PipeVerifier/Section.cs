@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-using SS13MapVerifier.Console.Verifiers.PipeVerifier.Parsers;
 using SS13MapVerifier.Map;
+using SS13MapVerifier.Verifiers.PipeVerifier.Parsers;
 
-namespace SS13MapVerifier.Console.Verifiers.PipeVerifier
+namespace SS13MapVerifier.Verifiers.PipeVerifier
 {
     [Flags]
     public enum ContentType

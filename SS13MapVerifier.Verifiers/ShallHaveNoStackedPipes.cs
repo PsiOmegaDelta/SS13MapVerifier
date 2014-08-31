@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using SS13MapVerifier.Console.Verifiers.PipeVerifier;
-using SS13MapVerifier.Console.Verifiers.PipeVerifier.Parsers;
 using SS13MapVerifier.Map;
+using SS13MapVerifier.Verifiers.PipeVerifier;
+using SS13MapVerifier.Verifiers.PipeVerifier.Parsers;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal class ShallHaveNoStackedPipes : IVerifier
+    public class ShallHaveNoStackedPipes : IVerifier
     {
         #region Public Methods and Operators
 

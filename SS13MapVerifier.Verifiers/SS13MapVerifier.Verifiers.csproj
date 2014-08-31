@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D323AC5B-C066-4172-B3EE-17352C527838}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{B3CCE657-3995-4E9B-853E-99FC06F00E46}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SS13MapVerifier.Console</RootNamespace>
-    <AssemblyName>SS13MapVerifierConsole</AssemblyName>
+    <RootNamespace>SS13MapVerifier.Verifiers</RootNamespace>
+    <AssemblyName>SS13MapVerifier.Verifiers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,17 +20,14 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,11 +39,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="AreaCheckBase.cs" />
+    <Compile Include="IVerifier.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="OnlyAllowPureAreaInstances.cs" />
+    <Compile Include="PipeVerifier\Parsers\BinaryParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\ManifoldParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\PipeParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\PortablesConnectorParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\SectionParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\TankParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\TrinaryParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\UnaryParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\ValveParser.cs" />
+    <Compile Include="PipeVerifier\Section.cs" />
+    <Compile Include="PipeVerifier\ThereShallBeOnlyBeTwoPipeLines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
+    <Compile Include="ShallBeOneAndOnlyOneAPCInEachArea.cs" />
+    <Compile Include="ShallHaveNoStackedPipes.cs" />
+    <Compile Include="ShallHaveNoStackedPowerCables.cs" />
+    <Compile Include="ShouldBeAtLeastOneAirAlarmInMostAreas.cs" />
+    <Compile Include="TerminalsShallHaveOpenCableEndOnSameTurf.cs" />
+    <Compile Include="VentsShouldHaveProperDefaultSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -58,10 +70,6 @@
     <ProjectReference Include="..\SS13MapVerifier.Map\SS13MapVerifier.Map.csproj">
       <Project>{DC67D251-2365-4C95-8D32-4C3E70F779F2}</Project>
       <Name>SS13MapVerifier.Map</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SS13MapVerifier.Verifiers\SS13MapVerifier.Verifiers.csproj">
-      <Project>{b3cce657-3995-4e9b-853e-99fc06f00e46}</Project>
-      <Name>SS13MapVerifier.Verifiers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

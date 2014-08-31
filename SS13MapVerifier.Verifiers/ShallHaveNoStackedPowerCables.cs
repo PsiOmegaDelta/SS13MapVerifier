@@ -4,9 +4,9 @@ using System.Linq;
 using SS13MapVerifier.Map;
 using SS13MapVerifier.Map.Constants;
 
-namespace SS13MapVerifier.Console.Verifiers
+namespace SS13MapVerifier.Verifiers
 {
-    internal class ShallHaveNoStackedPowerCables : IVerifier
+    public class ShallHaveNoStackedPowerCables : IVerifier
     {
         #region Public Methods and Operators
 

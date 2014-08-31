@@ -71,6 +71,10 @@
       <Project>{DC67D251-2365-4C95-8D32-4C3E70F779F2}</Project>
       <Name>SS13MapVerifier.Map</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SS13MapVerifier.Verifiers\SS13MapVerifier.Verifiers.csproj">
+      <Project>{b3cce657-3995-4e9b-853e-99fc06f00e46}</Project>
+      <Name>SS13MapVerifier.Verifiers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
