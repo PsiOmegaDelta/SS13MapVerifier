@@ -33,7 +33,8 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
         Valve,
         TValve,
         PortablesConnector,
-        Tank
+        Tank,
+        Omni
     }
 
     [DebuggerDisplay("{SectionType} = {ContentType} = {Input} = {Output}")]
@@ -41,7 +42,17 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
     {
         #region Static Fields
 
-        private static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser> { new PipeParser(), new ManifoldParser(), new UnaryParser(), new BinaryParser(), new TrinaryParser(), new ValveParser(), new PortablesConnectorParser(), new TankParser() };
+        internal static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser>
+        { new PipeParser(),
+            new ManifoldParser(),
+            new UnaryParser(),
+            new BinaryParser(),
+            new TrinaryParser(),
+            new ValveParser(),
+            new PortablesConnectorParser(),
+            new TankParser(),
+            new OmniParser()
+        };
 
         #endregion
 

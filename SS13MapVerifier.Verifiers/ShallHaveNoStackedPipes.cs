@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Common.Extensions;
+
 using SS13MapVerifier.Map;
 using SS13MapVerifier.Verifiers.PipeVerifier;
 using SS13MapVerifier.Verifiers.PipeVerifier.Parsers;
@@ -10,55 +12,93 @@ namespace SS13MapVerifier.Verifiers
 {
     public class ShallHaveNoStackedPipes : IVerifier
     {
-        #region Public Methods and Operators
+        #region Fields
 
         private readonly CompleteSectionParser sectionParser = new CompleteSectionParser();
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public IEnumerable<Log> ValidateMap(IMap map)
         {
             foreach (var tile in map.Tiles)
             {
-                var visitedDirections = Directions.None;
+                var visitedSupplyDirections = new Dictionary<ContentType, Directions>();
+                var visitedScrubberDirections = new Dictionary<ContentType, Directions>();
                 foreach (var atom in tile.Atoms.Where(x => this.sectionParser.CanParse(x)))
                 {
                     var result = this.sectionParser.Parse(atom);
                     var currentDirections = result.Item1 | result.Item2;
-                    if ((currentDirections & visitedDirections) != 0)
+                    var contentType = SupplyScrubberOrAnyType(result.Item4);
+
+                    if (contentType != ContentType.Scrubbers)
                     {
-                        yield return new Log("Stacked pipes", Severity.Error, tile);
-                        break;
+                        if ((currentDirections & visitedSupplyDirections.SafeGetValue(contentType, () => Directions.None)) != 0)
+                        {
+                            yield return new Log("Stacked pipes", Severity.Error, tile);
+                            break;
+                        }
+
+                        visitedSupplyDirections[contentType] |= currentDirections;
                     }
 
-                    visitedDirections |= currentDirections;
+                    if (contentType != ContentType.Supply)
+                    {
+                        if ((currentDirections & visitedScrubberDirections.SafeGetValue(contentType, () => Directions.None)) != 0)
+                        {
+                            yield return new Log("Stacked pipes", Severity.Error, tile);
+                            break;
+                        }
+
+                        visitedScrubberDirections[contentType] |= currentDirections;
+                    }
                 }
             }
         }
 
         #endregion
 
+        #region Methods
+
+        private static ContentType SupplyScrubberOrAnyType(ContentType result)
+        {
+            if (result == ContentType.Scrubbers)
+            {
+                return ContentType.Scrubbers;
+            }
+
+            if (result == ContentType.Supply)
+            {
+                return ContentType.Supply;
+            }
+
+            return ContentType.Any;
+        }
+
+        #endregion
+
         private class CompleteSectionParser : SectionParser
         {
-            private readonly IEnumerable<SectionParser> allParsers = new List<SectionParser>
-                                                                         {
-                                                                             new BinaryParser(), 
-                                                                             new ManifoldParser(), 
-                                                                             new PipeParser(), 
-                                                                             new PortablesConnectorParser(),
-                                                                             new TankParser(),
-                                                                             new TrinaryParser(),
-                                                                             new UnaryParser(),
-                                                                             new ValveParser()
-                                                                         };
+            #region Fields
+
+
+
+            #endregion
+
+            #region Public Methods and Operators
 
             public override bool CanParse(Atom atom)
             {
-                return this.allParsers.SingleOrDefault(x => x.CanParse(atom)) != null;
+                return Section.Parsers.SingleOrDefault(x => x.CanParse(atom)) != null;
             }
 
             public override Tuple<Directions, Directions, SectionType, ContentType> Parse(Atom atom)
             {
-                return this.allParsers.Single(x => x.CanParse(atom)).Parse(atom);
+                return Section.Parsers.Single(x => x.CanParse(atom)).Parse(atom);
             }
+
+            #endregion
         }
     }
 }

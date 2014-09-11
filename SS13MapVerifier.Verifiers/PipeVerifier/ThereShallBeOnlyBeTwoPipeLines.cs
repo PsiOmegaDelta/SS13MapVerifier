@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Common.Extensions;
 
@@ -25,31 +26,37 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
 
             var visitedSections = new HashSet<Section>();
             var connectedDirections = new Dictionary<Section, Directions>();
-            var supplySections = new List<Section>();
-            var scrubbersSections = new List<Section>();
+            var sections = new Dictionary<ContentType, List<Section>>();
 
-            RunChecks(tileToSections, visitedSections, supplySections, connectedDirections, ContentType.Supply);
-            RunChecks(tileToSections, visitedSections, scrubbersSections, connectedDirections, ContentType.Scrubbers);
+            foreach (var contentType in new[]{ContentType.Cyan, ContentType.Green, ContentType.Scrubbers, ContentType.Supply, ContentType.Yellow, ContentType.Any})
+            {
+                RunChecks(
+                    tileToSections,
+                    visitedSections,
+                    sections.SafeGetValue(contentType, () => new List<Section>()),
+                    connectedDirections,
+                    contentType);
+            }
 
             var allPipes = tileToSections.SelectMany(x => x.Value);
-            var unconnectedPipes = allPipes.Where(x => (x.ContentType == ContentType.Scrubbers || x.ContentType == ContentType.Supply) && (!connectedDirections.ContainsKey(x) || ((connectedDirections[x] ^ x.Directions) != 0)));
+            var unconnectedPipes = allPipes.Where(x => !connectedDirections.ContainsKey(x) || ((connectedDirections[x] ^ x.Directions) != 0));
 
             foreach (var unconnectedPipe in unconnectedPipes.OrderBy(x => x.ContentType))
             {
                 yield return new Log(string.Format("Unconnected pipe - {0}", unconnectedPipe.ContentType), Severity.Error, unconnectedPipe.Tile);
             }
 
-            if (supplySections.Count > 1)
+            if (sections[ContentType.Supply].Count > 1)
             {
-                foreach (var supplySection in supplySections)
+                foreach (var supplySection in sections[ContentType.Supply])
                 {
                     yield return new Log("Separate supply sections", Severity.Error, supplySection.Tile);
                 }
             }
 
-            if (scrubbersSections.Count > 3)
+            if (sections[ContentType.Scrubbers].Count > 3)
             {
-                foreach (var supplySection in scrubbersSections)
+                foreach (var supplySection in sections[ContentType.Scrubbers])
                 {
                     yield return new Log("Separate scrubbers sections", Severity.Error, supplySection.Tile);
                 }
