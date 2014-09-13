@@ -4,15 +4,17 @@
     {
         #region Static Fields
 
-        public static readonly string APC = "/obj/machinery/power/apc/";
+        public const string APC = "/obj/machinery/power/apc/";
 
-        public static readonly string AirAlarm = "/obj/machinery/alarm/";
+        public const string AirAlarm = "/obj/machinery/alarm/";
 
-        public static readonly string PowerCable = "/obj/structure/cable/";
+        public const string PowerCable = "/obj/structure/cable/";
 
-        public static readonly string PowerTerminal = "/obj/machinery/power/terminal/";
+        public const string PowerTerminal = "/obj/machinery/power/terminal/";
 
-        public static readonly string UnaryVent = "/obj/machinery/atmospherics/unary/vent/";
+        public const string UnaryVent = "/obj/machinery/atmospherics/unary/vent/";
+
+        public const string Omni = "/obj/machinery/atmospherics/omni/";
 
         #endregion
     }
