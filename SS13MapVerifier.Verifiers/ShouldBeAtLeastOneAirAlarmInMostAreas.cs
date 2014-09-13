@@ -47,6 +47,7 @@ namespace SS13MapVerifier.Verifiers
             {
                 return new List<string>
                            {
+                                Areas.Area,
                                 Areas.Space,
                                 Areas.SupplyStation,
                                 Areas.SyndicateStation,
