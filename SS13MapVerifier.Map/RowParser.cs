@@ -25,7 +25,7 @@ namespace SS13MapVerifier.Map
                 row = parsedVars.Item1;
                 var options = parsedVars.Item2;
 
-                yield return new Atom(type, options.ToLookup(x => x.Item1, x => x.Item2));
+                yield return new Atom(type, options.ToDictionary(x => x.Item1, x => x.Item2));
             }
         }
 
