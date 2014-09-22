@@ -57,18 +57,13 @@ namespace SS13MapVerifier.Map
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
             var otherCoord = obj as Coordinate;
             return otherCoord != null && this.Equals(otherCoord);
         }
 
         public bool Equals(Coordinate other)
         {
-            return this.x == other.X && this.y == other.Y && this.z == other.Z;
+            return ReferenceEquals(this, other) || (this.x == other.X && this.y == other.Y && this.z == other.Z);
         }
 
         public override int GetHashCode()

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace SS13MapVerifier.Map
 {
@@ -21,6 +23,21 @@ namespace SS13MapVerifier.Map
                 this.map.Add(tile.Coordinate, tile);
                 this.SetupNeighbours(tile);
             }
+
+            SetupMapSize();
+        }
+
+        private void SetupMapSize()
+        {
+            var dictionary = new Dictionary<int, Tuple<int, int>>();
+            foreach (var layer in Tiles.GroupBy(x => x.Coordinate.Z))
+            {
+                var width = layer.Max(x => x.Coordinate.X);
+                var height = layer.Max(y => y.Coordinate.Y);
+                dictionary[layer.Key] = Tuple.Create(width, height);
+            }
+
+            MapSize = new ReadOnlyDictionary<int, Tuple<int, int>>(dictionary);
         }
 
         #endregion
@@ -34,6 +51,8 @@ namespace SS13MapVerifier.Map
                 return this.map.Values;
             }
         }
+
+        public ReadOnlyDictionary<int, Tuple<int, int>> MapSize { get; private set; }
 
         #endregion
 

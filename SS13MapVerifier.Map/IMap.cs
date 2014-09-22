@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SS13MapVerifier.Map
 {
@@ -7,6 +9,8 @@ namespace SS13MapVerifier.Map
         #region Public Properties
 
         IEnumerable<ITile> Tiles { get; }
+
+        ReadOnlyDictionary<int, Tuple<int, int>> MapSize { get; }
 
         #endregion
 
