@@ -2,6 +2,8 @@
 {
     public static class Objects
     {
+        public const string PipeCap = "/obj/machinery/atmospherics/pipe/cap/";
+
         #region Static Fields
 
         public const string APC = "/obj/machinery/power/apc/";

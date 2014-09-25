@@ -43,7 +43,8 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
         #region Static Fields
 
         internal static readonly IEnumerable<SectionParser> Parsers = new List<SectionParser>
-        { new PipeParser(),
+        { 
+            new PipeParser(),
             new ManifoldParser(),
             new UnaryParser(),
             new BinaryParser(),
@@ -51,7 +52,8 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
             new ValveParser(),
             new PortablesConnectorParser(),
             new TankParser(),
-            new OmniParser()
+            new OmniParser(),
+            new CapParser()
         };
 
         #endregion

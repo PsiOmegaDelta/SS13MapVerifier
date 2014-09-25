@@ -16,7 +16,7 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
         public IEnumerable<Log> ValidateMap(IMap map)
         {
             var tileToSections = new Dictionary<ITile, IList<Section>>();
-            foreach (var tile in map.Tiles.Where(x => x.Coordinate.Z == 1))
+            foreach (var tile in map.Tiles)
             {
                 foreach (var atom in tile.Atoms.Where(Section.IsSection))
                 {
@@ -28,7 +28,7 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
             var connectedDirections = new Dictionary<Section, Directions>();
             var sections = new Dictionary<ContentType, List<Section>>();
 
-            foreach (var contentType in new[]{ContentType.Cyan, ContentType.Green, ContentType.Scrubbers, ContentType.Supply, ContentType.Yellow, ContentType.Any})
+            foreach (var contentType in new[] { ContentType.Cyan, ContentType.Green, ContentType.Scrubbers, ContentType.Supply, ContentType.Yellow, ContentType.Any })
             {
                 RunChecks(
                     tileToSections,
@@ -46,19 +46,21 @@ namespace SS13MapVerifier.Verifiers.PipeVerifier
                 yield return new Log(string.Format("Unconnected pipe - {0}", unconnectedPipe.ContentType), Severity.Error, unconnectedPipe.Tile);
             }
 
-            if (sections[ContentType.Supply].Count > 1)
+            var supplyGroups = sections[ContentType.Supply].GroupBy(x => x.Tile.Coordinate.Z).ToArray();
+            foreach (var supplyGroup in supplyGroups.Where(x => x.Count() > 1))
             {
-                foreach (var supplySection in sections[ContentType.Supply])
+                foreach (var section in supplyGroup)
                 {
-                    yield return new Log("Separate supply sections", Severity.Error, supplySection.Tile);
+                    yield return new Log("Separate supply sections", Severity.Error, section.Tile);   
                 }
             }
 
-            if (sections[ContentType.Scrubbers].Count > 3)
+            var scrubberGroups = sections[ContentType.Scrubbers].GroupBy(x => x.Tile.Coordinate.Z).ToArray();
+            foreach (var scrubberSection in scrubberGroups.Where(x => x.Count() > 1))
             {
-                foreach (var supplySection in sections[ContentType.Scrubbers])
+                foreach (var section in scrubberSection)
                 {
-                    yield return new Log("Separate scrubbers sections", Severity.Error, supplySection.Tile);
+                    yield return new Log("Separate scrubbers sections", Severity.Error, section.Tile);                    
                 }
             }
         }

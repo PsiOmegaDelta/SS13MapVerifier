@@ -44,6 +44,7 @@
     <Compile Include="Log.cs" />
     <Compile Include="OnlyAllowPureAreaInstances.cs" />
     <Compile Include="PipeVerifier\Parsers\BinaryParser.cs" />
+    <Compile Include="PipeVerifier\Parsers\CapParser.cs" />
     <Compile Include="PipeVerifier\Parsers\ManifoldParser.cs" />
     <Compile Include="PipeVerifier\Parsers\OmniParser.cs" />
     <Compile Include="PipeVerifier\Parsers\PipeParser.cs" />
