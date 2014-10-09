@@ -60,6 +60,7 @@
     <Compile Include="ShallBeOneAndOnlyOneAPCInEachArea.cs" />
     <Compile Include="ShallHaveNoStackedPipes.cs" />
     <Compile Include="ShallHaveNoStackedPowerCables.cs" />
+    <Compile Include="ShallHaveUniqueCameraCTags.cs" />
     <Compile Include="ShouldBeAtLeastOneAirAlarmInMostAreas.cs" />
     <Compile Include="TerminalsShallHaveOpenCableEndOnSameTurf.cs" />
     <Compile Include="VentsShouldHaveProperDefaultSettings.cs" />

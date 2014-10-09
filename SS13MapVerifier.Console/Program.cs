@@ -13,9 +13,13 @@ namespace SS13MapVerifier.Console
         public static void Main(string[] args)
         {
             System.Console.WriteLine("Enter path to map");
-            var map = MapParser.ParseFile(System.Console.ReadLine());
+            var path = System.Console.ReadLine();
+            while (true)
+            {
+                System.Console.WriteLine("Parsing...");
+                var map = MapParser.ParseFile(path);
 
-            var verifiers = new List<IVerifier>
+                var verifiers = new List<IVerifier>
                                 {
                                     new TerminalsShallHaveOpenCableEndOnSameTurf(),
                                     new ShallBeOneAndOnlyOneApcInEachArea(),
@@ -24,12 +28,14 @@ namespace SS13MapVerifier.Console
                                     new ShouldBeAtLeastOneAirAlarmInMostAreas(),
                                     new ShallHaveNoStackedPipes(),
                                     new ShallHaveNoStackedPowerCables(),
-                                    new VentsShouldHaveProperDefaultSettings()
+                                    new VentsShouldHaveProperDefaultSettings(),
+                                    new ShallHaveUniqueCameraCTags()
                                 };
 
-            Parallel.ForEach(verifiers, verifier => Verify(verifier, map));
-            System.Console.WriteLine("Done");
-            System.Console.ReadLine();
+                Parallel.ForEach(verifiers, verifier => Verify(verifier, map));
+                System.Console.WriteLine("Done");
+                System.Console.ReadLine();
+            }
         }
 
         private static void Verify(IVerifier verifier, IMap map)
